@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTG Events</title>
+    <meta
+      name="description"
+      content="Off The Grid Events creates immersive outdoor experiences for people ready to escape routine and reconnect with the moment."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+    <script src="events-data.js"></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="header-inner">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="#home">Home</a>
+            <a href="#experiences">Experiences</a>
+            <a href="#what-we-do">What We Do</a>
+            <a href="#story">Our Story</a>
+            <a href="#contact">Contact</a>
+          </nav>
+
+          <a class="button button-ghost header-button" href="#contact">Start your inquiry</a>
+        </div>
+
+        <div class="brand" aria-label="Off The Grid Events logo">
+          <img class="brand-logo" src="logos/otg white.png" alt="Off The Grid Events logo" />
+        </div>
+      </header>
+
+      <main class="homepage">
+        <section class="hero" id="home">
+          <div class="hero-copy">
+            <p class="eyebrow">OFF THE GRID.<br />OUT OF YOUR HEAD.<br />INTO THE MOMENT.</p>
+            <h1>
+              OFF THE GRID.<br />
+              OUT OF YOUR HEAD.<br />
+              INTO THE MOMENT.
+            </h1>
+            <p class="lede">
+              We don't just plan events. We create experiences that make you feel alive.
+            </p>
+
+            <div class="hero-actions">
+              <a class="button button-primary" href="#contact">BOOK YOUR EXPERIENCE</a>
+              <a class="button button-secondary" href="#experiences">EXPLORE EXPERIENCES</a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-label="Outdoor adventure imagery">
+            <div class="hero-stage">
+              <div class="hero-photo-main" role="img" aria-label="A premium outdoor escape with open skies and a reflective lake"></div>
+              <div class="hero-photo-mini" role="img" aria-label="Campfire and camping atmosphere in the outdoors"></div>
+
+              <svg class="hero-camping-svg" viewBox="0 0 260 120" aria-hidden="true">
+                <g fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 90L69 53L118 90H22Z"/>
+                  <path d="M72 55L118 90M70 55L26 90M42 82L70 55M96 82L71 55"/>
+                  <path d="M116 75L140 90H94L116 75Z"/>
+                  <path d="M124 70L154 90H96L124 70Z"/>
+                  <path d="M20 90c11-8 21-10 31-6"/>
+                  <path d="M150 90c8-7 18-10 30-8"/>
+                  <path d="M76 90v22"/>
+                  <path d="M76 112h-11c-10 0-18 7-18 18h58c0-11-8-18-18-18H76Z"/>
+                  <path d="M175 88l15-21 15 21"/>
+                  <path d="M191 68v-16"/>
+                  <path d="M182 89l-17 18"/>
+                  <path d="M200 89l17 18"/>
+                  <path d="M160 92c9-18 22-18 31 0"/>
+                </g>
+              </svg>
+
+              <div class="caption-card">
+                <span>Upcoming experience</span>
+                <strong>Survival Camp</strong>
+                <small>Shalom Matopo • inquiry required</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="stats-band" aria-labelledby="stats-heading">
+          <div class="stats-header">
+            <p class="kicker kicker-light">Why OTG</p>
+            <h2 id="stats-heading">More than an outing. A reset for the soul.</h2>
+          </div>
+          <div class="stats-grid" id="stats-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="events-marketplace" id="upcoming-events" aria-labelledby="events-heading">
+          <div class="events-header">
+            <div>
+              <p class="kicker">Upcoming events &amp; trips</p>
+              <h2 id="events-heading">Find your next memorable escape.</h2>
+            </div>
+            <div class="event-filters" aria-label="Event categories" role="tablist">
+              <button class="filter-chip is-active" type="button" data-filter="All" aria-pressed="true">All</button>
+              <button class="filter-chip" type="button" data-filter="Adventure" aria-pressed="false">Adventure</button>
+              <button class="filter-chip" type="button" data-filter="Trips" aria-pressed="false">Trips</button>
+              <button class="filter-chip" type="button" data-filter="Couples Retreats" aria-pressed="false">Couples Retreats</button>
+              <button class="filter-chip" type="button" data-filter="Parties" aria-pressed="false">Parties</button>
+              <button class="filter-chip" type="button" data-filter="Other Events" aria-pressed="false">Other Events</button>
+            </div>
+          </div>
+          <div class="events-grid" id="events-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="discovery" id="experiences">
+          <div class="section-heading section-heading-inline">
+            <p class="kicker">Discover</p>
+            <h2>Choose your version of getting away.</h2>
+          </div>
+
+          <div class="discovery-grid">
+            <a class="discover-card" href="#contact">
+              <div class="discover-image discover-one"></div>
+              <div class="discover-copy">
+                <span>Forest Weekends</span>
+                <p>Owner-approved placeholder category for review.</p>
+              </div>
+            </a>
+
+            <a class="discover-card" href="#contact">
+              <div class="discover-image discover-two"></div>
+              <div class="discover-copy">
+                <span>Adventure Gatherings</span>
+                <p>Placeholder for future outdoor event experiences.</p>
+              </div>
+            </a>
+
+            <a class="discover-card" href="#contact">
+              <div class="discover-image discover-three"></div>
+              <div class="discover-copy">
+                <span>Private Retreats</span>
+                <p>Edit this category before publishing if needed.</p>
+              </div>
+            </a>
+
+            <a class="discover-card" href="#contact">
+              <div class="discover-image discover-four"></div>
+              <div class="discover-copy">
+                <span>Day Escapes</span>
+                <p>Editorial placeholder to confirm with the owner.</p>
+              </div>
+            </a>
+          </div>
+        </section>
+
+        <section class="who-can-join" id="who-can-join" aria-labelledby="who-can-join-heading">
+          <div class="who-can-join-header">
+            <p class="kicker">Who can join</p>
+            <h2 id="who-can-join-heading">Individuals, Couples and Groups of Friends are all welcome to join OTG.</h2>
+          </div>
+
+          <div class="who-can-join-grid">
+            <div class="who-can-join-photo-wrap" aria-label="Outdoor adventure and camping image">
+              <div class="who-can-join-art" role="img" aria-label="A camping and outdoor adventure setting" aria-hidden="false"></div>
+            </div>
+
+            <div class="who-can-join-copy">
+              <p>
+                Our main clients are individuals, couples, solo travellers and groups of friends, private groups
+                (family gatherings &amp; school reunions), and corporate, public and private companies. The aim is to
+                make travelling easy, affordable and accessible to everyone, with thoughtful planning and a strong focus
+                on nature, connection and comfort.
+              </p>
+              <p>
+                Our guides and bush chefs are highly trained personnel who love what they do, placing customer safety
+                and security first.
+              </p>
+
+              <div class="who-can-join-pills" aria-label="Typical OTG audience groups">
+                <span>Solo travellers</span>
+                <span>Couples</span>
+                <span>Groups of friends</span>
+                <span>Family gatherings</span>
+                <span>Corporate teams</span>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="philosophy panel-ivory" id="what-we-do">
+          <div class="intro-text">
+            <p class="kicker">What We Do</p>
+            <h2>We design moments that pull people out of routine and back into themselves.</h2>
+            <p>
+              OTG creates immersive experiences for people who want more than a night out. We bring together nature,
+              thoughtful hospitality and well-paced adventure so guests can reconnect, recharge and feel genuinely alive.
+            </p>
+          </div>
+
+          <div class="intro-visual">
+            <div class="intro-photo"></div>
+          </div>
+        </section>
+
+        <section class="experience-showcase" id="story">
+          <div class="section-heading">
+            <p class="kicker kicker-dark">The OTG way</p>
+            <h2>Intentional escapes, designed for real life.</h2>
+          </div>
+
+          <div class="experience-grid">
+            <article class="feature-story large-story">
+              <div class="feature-photo feature-photo-one"></div>
+              <div class="feature-copy">
+                <span>Curated energy</span>
+                <h3>A slower rhythm, a deeper reset.</h3>
+                <p>
+                  Thoughtful planning, warm hospitality and nature-first atmosphere create a sense of ease from the moment guests arrive.
+                </p>
+              </div>
+            </article>
+
+            <article class="feature-story small-story">
+              <div class="feature-copy compact-copy">
+                <span>Human connection</span>
+                <h3>Shared moments in beautiful places.</h3>
+              </div>
+              <div class="feature-photo feature-photo-two"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="gallery panel-dark" aria-label="Adventure gallery">
+          <div class="section-heading section-heading-inline light-heading">
+            <p class="kicker">Moments</p>
+            <h2>Adventure, stillness and belonging.</h2>
+          </div>
+
+          <div class="gallery-grid">
+            <div class="gallery-photo photo-a"></div>
+            <div class="gallery-photo photo-b"></div>
+            <div class="gallery-photo photo-c"></div>
+            <div class="gallery-photo photo-d"></div>
+          </div>
+        </section>
+
+        <section class="inquiry panel-ivory" id="contact">
+          <div class="inquiry-copy">
+            <p class="kicker">Start your inquiry</p>
+            <h2>Tell us what kind of escape you’re craving.</h2>
+          </div>
+
+          <div class="inquiry-actions">
+            <a class="button button-primary" href="mailto:hello@otg-events.example">BOOK YOUR EXPERIENCE</a>
+            <a class="button button-secondary" href="mailto:hello@otg-events.example">CONTACT OTG</a>
+          </div>
+        </section>
+      </main>
+
+      <footer class="site-footer">
+        <div class="footer-brand">
+          <img src="logos/otg white.png" alt="OTG logo" />
+        </div>
+        <p>OFF THE GRID. OUT OF YOUR HEAD. INTO THE MOMENT.</p>
+        <div class="footer-links">
+          <a href="#home">Home</a>
+          <a href="#experiences">Experiences</a>
+          <a href="#contact">Contact</a>
+          <a href="#contact">Donate</a>
+        </div>
+      </footer>
+    </div>
+
+    <div class="booking-modal" id="booking-modal" aria-hidden="true">
+      <div class="booking-modal-backdrop" data-close-modal="true"></div>
+      <div class="booking-modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <button class="modal-close" type="button" aria-label="Close booking details" data-close-modal="true">×</button>
+        <div class="modal-body" id="modal-body"></div>
+      </div>
+    </div>
+
+    <script>
+      // Central stats values for quick update and approval before launch.
+      const statsGrid = document.getElementById("stats-grid");
+
+      if (statsGrid) {
+        statsGrid.innerHTML = window.otgStatsConfig
+          .map(
+            (stat, index) => `
+              <div class="stat-item" style="--delay:${index * 0.18}s">
+                <svg class="stat-circle" viewBox="0 0 220 220" aria-hidden="true" role="presentation">
+                  <circle class="stat-track" cx="110" cy="110" r="82"></circle>
+                  <circle class="stat-outline" cx="110" cy="110" r="82"></circle>
+                  <circle class="stat-dot" cx="110" cy="28" r="5"></circle>
+                </svg>
+                <div class="stat-content">
+                  <span class="stat-value">${stat.value}</span>
+                  <span class="stat-label">${stat.label}</span>
+                </div>
+              </div>
+            `
+          )
+          .join("");
+
+        const statItems = Array.from(document.querySelectorAll(".stat-item"));
+        const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const statDurationMs = 5000;
+        let statsAnimationStarted = false;
+
+        const animateStat = (item, index) => {
+          const outline = item.querySelector(".stat-outline");
+          const dot = item.querySelector(".stat-dot");
+          const radius = 82;
+          const circumference = 2 * Math.PI * radius;
+
+          outline.style.strokeDasharray = `${circumference} ${circumference}`;
+          outline.style.strokeDashoffset = String(circumference);
+          outline.style.opacity = "1";
+          dot.setAttribute("opacity", "0");
+
+          const startTime = performance.now() + index * 220;
+
+          const tick = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / statDurationMs, 1);
+            const offset = circumference * (1 - progress);
+            outline.style.strokeDashoffset = String(offset);
+
+            if (progress < 1) {
+              const angle = -Math.PI / 2 + progress * Math.PI * 2;
+              const x = 110 + radius * Math.cos(angle);
+              const y = 110 + radius * Math.sin(angle);
+              dot.setAttribute("cx", x.toFixed(2));
+              dot.setAttribute("cy", y.toFixed(2));
+              dot.setAttribute("opacity", "1");
+              requestAnimationFrame(tick);
+            } else {
+              dot.setAttribute("opacity", "0");
+            }
+          };
+
+          requestAnimationFrame(tick);
+        };
+
+        const revealStats = () => {
+          if (statsAnimationStarted) {
+            return;
+          }
+
+          statsAnimationStarted = true;
+          statItems.forEach((item, index) => {
+            item.classList.add("is-visible");
+            if (!prefersReducedMotion) {
+              animateStat(item, index);
+            } else {
+              const outline = item.querySelector(".stat-outline");
+              outline.style.strokeDasharray = "999 999";
+              outline.style.strokeDashoffset = "0";
+              const dot = item.querySelector(".stat-dot");
+              dot.setAttribute("opacity", "0");
+            }
+          });
+        };
+
+        const observer = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                revealStats();
+                observer.disconnect();
+              }
+            });
+          },
+          { threshold: 0.25 }
+        );
+
+        if (prefersReducedMotion) {
+          revealStats();
+        } else {
+          observer.observe(document.querySelector(".stats-band"));
+        }
+      }
+
+      const eventsGrid = document.getElementById("events-grid");
+      const modal = document.getElementById("booking-modal");
+      const modalBody = document.getElementById("modal-body");
+      let activeFilter = "All";
+      let selectedEvent = null;
+
+      function formatEventCard(event) {
+        const statusClass = event.publicationStatus === "forthcoming" ? "status-status" : "status-status";
+        const priceText = event.priceValue !== null ? `${event.currency || "USD"} ${event.price}` : event.price;
+
+        return `
+          <article class="event-card" data-category="${event.category}">
+            <div class="event-image-wrap">
+              <img src="${event.image}" alt="${event.name}" />
+              <span class="event-status ${statusClass}">${event.status}</span>
+            </div>
+            <div class="event-details">
+              <div class="event-topline">
+                <span class="event-category">${event.category}</span>
+                <span class="event-price">${priceText}</span>
+              </div>
+              <h3>${event.name}</h3>
+              <p class="event-meta">${event.displayDate}</p>
+              <p class="event-meta">${event.venue}</p>
+              <p class="event-description">${event.description}</p>
+              <div class="event-footer">
+                <span class="event-availability">${event.availability}</span>
+                <button class="button button-primary event-cta" type="button" data-event-id="${event.id}">View details</button>
+              </div>
+            </div>
+          </article>
+        `;
+      }
+
+      function renderEvents() {
+        if (!eventsGrid) return;
+
+        const filtered = activeFilter === "All"
+          ? window.otgEventData
+          : window.otgEventData.filter((event) => event.category === activeFilter);
+
+        eventsGrid.innerHTML = filtered.map(formatEventCard).join("");
+      }
+
+      function syncFilters() {
+        document.querySelectorAll(".filter-chip").forEach((chip) => {
+          const matches = chip.dataset.filter === activeFilter;
+          chip.classList.toggle("is-active", matches);
+          chip.setAttribute("aria-pressed", String(matches));
+        });
+      }
+
+      function openBookingModal(eventId) {
+        selectedEvent = window.otgEventData.find((event) => event.id === eventId) || window.otgEventData[0];
+        if (!selectedEvent || !modalBody) return;
+
+        const activityList = selectedEvent.activities.map((item) => `<li>${item}</li>`).join("");
+        const phoneLinks = selectedEvent.contactNumbers
+          .map((number) => `<a href="tel:${number}">${number}</a>`)
+          .join(" · ");
+
+        modalBody.innerHTML = `
+          <div class="modal-header">
+            <p class="kicker kicker-modal">${selectedEvent.category}</p>
+            <h2 id="modal-title">${selectedEvent.name}</h2>
+            <span class="modal-status">${selectedEvent.statusText}</span>
+          </div>
+
+          <div class="modal-hero">
+            <img src="${selectedEvent.image}" alt="${selectedEvent.name}" />
+          </div>
+
+          <div class="modal-meta-grid">
+            <div><span class="meta-label">Date</span><strong>${selectedEvent.displayDate}</strong></div>
+            <div><span class="meta-label">Venue</span><strong>${selectedEvent.venue}</strong></div>
+            <div><span class="meta-label">Price</span><strong>${selectedEvent.price}</strong></div>
+            <div><span class="meta-label">Age</span><strong>${selectedEvent.ageRestriction}</strong></div>
+          </div>
+
+          <div class="modal-section">
+            <h3>About this experience</h3>
+            <p>${selectedEvent.description}</p>
+          </div>
+
+          <div class="modal-section">
+            <h3>Included activities</h3>
+            <ul class="detail-list">${activityList}</ul>
+          </div>
+
+          <div class="modal-section">
+            <h3>Important conditions</h3>
+            <ul class="detail-list">
+              <li>Availability: ${selectedEvent.availability}</li>
+              <li>Booking state: ${selectedEvent.bookingType} — no confirmed booking is created until a verified backend or service is connected.</li>
+              <li>Direct contact: ${phoneLinks}</li>
+            </ul>
+          </div>
+
+          <div class="booking-form-wrap">
+            <div class="booking-alert">
+              This is a request-only flow. The website does not currently have a live booking backend or payment provider configured. Use the form below to send a booking inquiry and confirm availability directly with OTG.
+            </div>
+
+            <form id="booking-form" novalidate>
+              <div class="field-grid">
+                <label>
+                  <span>Full name</span>
+                  <input type="text" name="fullName" placeholder="Your full name" required />
+                </label>
+                <label>
+                  <span>Contact number</span>
+                  <input type="tel" name="phone" placeholder="Your phone number" required />
+                </label>
+                <label>
+                  <span>Email address</span>
+                  <input type="email" name="email" placeholder="you@example.com" required />
+                </label>
+                <label>
+                  <span>Attendees</span>
+                  <input type="number" name="attendees" min="1" value="1" required />
+                </label>
+              </div>
+
+              <label>
+                <span>Event requirements</span>
+                <textarea name="notes" rows="4" placeholder="Tell us about dietary needs, accessibility, rooming or any other important notes."></textarea>
+              </label>
+
+              <div class="booking-review" id="booking-review">
+                <strong>Review</strong>
+                <p>Customer name: —</p>
+                <p>Contact: —</p>
+                <p>Attendees: 1</p>
+                <p>Event: ${selectedEvent.name}</p>
+              </div>
+
+              <div class="modal-actions">
+                <button type="submit" class="button button-primary">Send inquiry request</button>
+                <a class="button button-secondary" href="tel:${selectedEvent.contactNumbers[0]}">Call OTG</a>
+              </div>
+            </form>
+          </div>
+        `;
+
+        modal.classList.add("is-open");
+        modal.setAttribute("aria-hidden", "false");
+
+        const bookingForm = document.getElementById("booking-form");
+        const reviewBox = document.getElementById("booking-review");
+
+        if (bookingForm) {
+          bookingForm.addEventListener("input", () => {
+            const formData = new FormData(bookingForm);
+            const fullName = formData.get("fullName") || "—";
+            const phone = formData.get("phone") || "—";
+            const attendees = formData.get("attendees") || 1;
+            const notes = formData.get("notes") || "No additional notes";
+
+            reviewBox.innerHTML = `
+              <strong>Review</strong>
+              <p>Customer name: ${fullName}</p>
+              <p>Contact: ${phone}</p>
+              <p>Attendees: ${attendees}</p>
+              <p>Notes: ${notes}</p>
+              <p>Event: ${selectedEvent.name}</p>
+            `;
+          });
+
+          bookingForm.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const formData = new FormData(bookingForm);
+            const fullName = formData.get("fullName");
+            const phone = formData.get("phone");
+            const email = formData.get("email");
+            const attendees = formData.get("attendees") || 1;
+            const notes = formData.get("notes") || "No additional notes";
+
+            if (!fullName || !phone || !email) {
+              reviewBox.innerHTML = `
+                <strong>Review</strong>
+                <p>Please complete the required fields before sending an inquiry.</p>
+              `;
+              return;
+            }
+
+            const confirmation = document.createElement("div");
+            confirmation.className = "booking-success";
+            confirmation.innerHTML = `
+              <h3>Inquiry request prepared</h3>
+              <p><strong>Event:</strong> ${selectedEvent.name}</p>
+              <p><strong>Name:</strong> ${fullName}</p>
+              <p><strong>Contact:</strong> ${phone} / ${email}</p>
+              <p><strong>Attendees:</strong> ${attendees}</p>
+              <p><strong>Notes:</strong> ${notes}</p>
+              <p>This demo does not yet send to a live booking backend. Your request is only an inquiry. Availability should be confirmed directly with OTG before any payment or final booking is accepted.</p>
+            `;
+
+            bookingForm.replaceWith(confirmation);
+          });
+        }
+      }
+
+      document.addEventListener("click", (event) => {
+        const filterChip = event.target.closest(".filter-chip");
+        if (filterChip) {
+          activeFilter = filterChip.dataset.filter;
+          syncFilters();
+          renderEvents();
+          return;
+        }
+
+        const eventButton = event.target.closest(".event-cta");
+        if (eventButton) {
+          const id = eventButton.dataset.eventId;
+          openBookingModal(id);
+          return;
+        }
+
+        const closeTarget = event.target.closest("[data-close-modal]");
+        if (closeTarget && modal) {
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+          return;
+        }
+      });
+
+      document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && modal && modal.classList.contains("is-open")) {
+          modal.classList.remove("is-open");
+          modal.setAttribute("aria-hidden", "true");
+        }
+      });
+
+      renderEvents();
+      syncFilters();
+    </script>
+  </body>
+</html>
