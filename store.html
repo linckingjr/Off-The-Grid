@@ -1,0 +1,1329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>OTG Store | Off The Grid Events</title>
+    <meta
+      name="description"
+      content="Shop OTG merchandise and request outdoor equipment rentals. Product prices and rental rates remain pending confirmation until OTG approves them."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      :root {
+        --store-ivory: #f7f4ee;
+        --store-panel: rgba(255, 255, 255, 0.95);
+        --store-line: rgba(16, 23, 19, 0.08);
+        --store-muted: rgba(23, 29, 26, 0.7);
+      }
+
+      .page-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 32px 80px;
+      }
+
+      .store-strip {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 48px;
+        margin: 12px auto 22px;
+        padding: 12px 18px;
+        border-radius: 999px;
+        border: 1px solid var(--store-line);
+        background: rgba(255, 255, 255, 0.78);
+        color: var(--store-muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        text-align: center;
+      }
+
+      .store-header {
+        display: grid;
+        grid-template-columns: auto minmax(240px, 1fr) auto auto;
+        gap: 18px;
+        align-items: center;
+        padding: 18px 24px;
+        background: rgba(25, 42, 35, 0.96);
+        border-radius: 22px;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        box-shadow: 0 18px 35px rgba(16, 23, 19, 0.12);
+      }
+
+      .store-logo-wrap {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 118px;
+        height: 54px;
+        padding: 8px 10px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .store-logo-wrap img {
+        width: auto;
+        max-height: 40px;
+        object-fit: contain;
+      }
+
+      .store-search {
+        position: relative;
+      }
+
+      .store-search input {
+        width: 100%;
+        min-height: 48px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--white);
+        padding: 0 18px 0 46px;
+        font: inherit;
+      }
+
+      .store-search input::placeholder {
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .store-search::before {
+        content: "⌕";
+        position: absolute;
+        left: 16px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.25rem;
+        color: rgba(255, 255, 255, 0.7);
+      }
+
+      .store-nav {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .store-nav button {
+        appearance: none;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--white);
+        border-radius: 999px;
+        min-height: 38px;
+        padding: 0 14px;
+        font-size: 0.72rem;
+        text-transform: uppercase;
+        letter-spacing: 0.12em;
+        cursor: pointer;
+      }
+
+      .store-nav button.is-active {
+        background: rgba(183, 161, 106, 0.2);
+        border-color: rgba(183, 161, 106, 0.5);
+      }
+
+      .store-right {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+
+      .store-link {
+        color: var(--white);
+        text-decoration: none;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        opacity: 0.9;
+      }
+
+      .store-cart-button {
+        position: relative;
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--white);
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+
+      .store-cart-button span {
+        position: absolute;
+        top: -7px;
+        right: -6px;
+        min-width: 22px;
+        height: 22px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        background: var(--brass);
+        color: var(--obsidian);
+        font-size: 0.68rem;
+        font-weight: 800;
+      }
+
+      .shop-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.9fr) 355px;
+        gap: 28px;
+        align-items: start;
+        margin-top: 26px;
+      }
+
+      .mode-panel,
+      .category-panel,
+      .catalog-panel,
+      .cart-panel {
+        background: var(--store-panel);
+        border: 1px solid var(--store-line);
+        border-radius: 24px;
+        box-shadow: 0 12px 25px rgba(16, 23, 19, 0.04);
+      }
+
+      .mode-panel {
+        padding: 18px 18px 14px;
+      }
+
+      .mode-switch {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .mode-switch button {
+        border: 1px solid rgba(16, 23, 19, 0.1);
+        background: rgba(16, 23, 19, 0.02);
+        color: var(--forest-primary);
+        border-radius: 999px;
+        min-height: 42px;
+        padding: 0 18px;
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .mode-switch button.is-active {
+        background: var(--forest-primary);
+        border-color: var(--forest-primary);
+        color: var(--white);
+      }
+
+      .welcome-banner {
+        margin-top: 18px;
+        padding: 26px 28px;
+        border-radius: 24px;
+        background: linear-gradient(135deg, rgba(183, 161, 106, 0.12), rgba(32, 58, 45, 0.03));
+        border: 1px solid rgba(32, 58, 45, 0.08);
+      }
+
+      .welcome-banner h2 {
+        margin: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.1rem, 4vw, 3.5rem);
+        line-height: 0.9;
+        letter-spacing: -0.04em;
+        color: var(--text);
+      }
+
+      .category-panel {
+        margin-top: 24px;
+        padding: 18px 18px 20px;
+      }
+
+      .category-grid {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 14px;
+      }
+
+      .category-tile {
+        position: relative;
+        min-height: 140px;
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(16, 23, 19, 0.06);
+        background-size: cover;
+        background-position: center;
+        color: var(--white);
+        cursor: pointer;
+      }
+
+      .category-tile::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(16, 23, 19, 0.15), rgba(16, 23, 19, 0.7));
+      }
+
+      .category-tile span {
+        position: absolute;
+        left: 16px;
+        right: 16px;
+        bottom: 14px;
+        z-index: 1;
+        font-size: 0.8rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .catalog-panel {
+        padding: 20px 20px 24px;
+      }
+
+      .catalog-toolbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        margin-bottom: 18px;
+      }
+
+      .catalog-toolbar p {
+        margin: 0;
+        color: var(--store-muted);
+        font-size: 0.76rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .sort-field {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--store-muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .sort-field select {
+        border: 1px solid rgba(16, 23, 19, 0.12);
+        background: #f7f4ee;
+        color: var(--text);
+        min-height: 42px;
+        border-radius: 12px;
+        padding: 0 14px;
+      }
+
+      .catalog-grid {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 18px;
+      }
+
+      .product-card {
+        display: flex;
+        flex-direction: column;
+        background: #fffdf8;
+        border: 1px solid rgba(16, 23, 19, 0.08);
+        border-radius: 18px;
+        overflow: hidden;
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+        min-height: 100%;
+      }
+
+      .product-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 14px 22px rgba(16, 23, 19, 0.06);
+      }
+
+      .product-image {
+        height: 170px;
+        overflow: hidden;
+        background: #ebe4d8;
+      }
+
+      .product-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .product-body {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        padding: 14px 14px 16px;
+      }
+
+      .pill-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 10px;
+      }
+
+      .product-type,
+      .product-status {
+        display: inline-flex;
+        align-items: center;
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.6rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        font-weight: 700;
+      }
+
+      .product-type {
+        background: rgba(183, 161, 106, 0.12);
+        color: var(--forest-primary);
+      }
+
+      .product-status.pending {
+        background: rgba(183, 161, 106, 0.12);
+        color: var(--forest-primary);
+      }
+
+      .product-status.confirmed {
+        background: rgba(32, 58, 45, 0.09);
+        color: var(--forest-primary);
+      }
+
+      .product-card h3 {
+        margin: 0 0 8px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(1.8rem, 2vw, 2.2rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+        color: var(--text);
+      }
+
+      .product-copy {
+        display: grid;
+        gap: 6px;
+      }
+
+      .product-card p {
+        margin: 0;
+      }
+
+      .product-description {
+        color: var(--store-muted);
+        line-height: 1.55;
+        font-size: 0.9rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        transition: max-height 0.2s ease;
+      }
+
+      .product-description.is-expanded {
+        display: block;
+        -webkit-line-clamp: unset;
+        overflow: visible;
+      }
+
+      .text-toggle {
+        justify-self: flex-start;
+        padding: 0;
+        border: none;
+        background: transparent;
+        color: var(--forest-primary);
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .text-toggle:hover {
+        text-decoration: underline;
+      }
+
+      .detail-strip {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 8px 10px;
+        margin: 12px 0 14px;
+        padding-top: 10px;
+        border-top: 1px solid rgba(16, 23, 19, 0.08);
+      }
+
+      .detail-item {
+        display: grid;
+        gap: 4px;
+      }
+
+      .detail-item span {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(23, 29, 26, 0.62);
+      }
+
+      .detail-item strong {
+        font-size: 0.82rem;
+        color: var(--forest-primary);
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 10px;
+        align-items: flex-end;
+        margin-top: auto;
+      }
+
+      .qty-input {
+        display: grid;
+        gap: 6px;
+        min-width: 72px;
+      }
+
+      .qty-input span {
+        font-size: 0.62rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: rgba(23, 29, 26, 0.65);
+      }
+
+      .qty-input input {
+        width: 100%;
+        min-height: 42px;
+        border-radius: 12px;
+        border: 1px solid rgba(16, 23, 19, 0.12);
+        background: #f6f2ea;
+        padding: 0 12px;
+        font: inherit;
+      }
+
+      .primary-action {
+        flex: 1;
+        min-height: 42px;
+        border: none;
+        border-radius: 12px;
+        background: var(--forest-primary);
+        color: var(--white);
+        padding: 0 14px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .secondary-action {
+        flex: 1;
+        min-height: 42px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, var(--brass), #d1b778);
+        color: var(--obsidian);
+        padding: 0 14px;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .empty-state {
+        width: 100%;
+        padding: 28px 22px;
+        border: 1px dashed rgba(16, 23, 19, 0.16);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.7);
+        color: var(--store-muted);
+        text-align: center;
+        line-height: 1.7;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      .cart-panel {
+        padding: 18px 18px 22px;
+        position: sticky;
+        top: 24px;
+      }
+
+      .cart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 14px;
+      }
+
+      .cart-header h3 {
+        margin: 0;
+        font-family: "Cormorant Garamond", serif;
+        font-size: 2.6rem;
+        letter-spacing: -0.04em;
+      }
+
+      .cart-header span {
+        color: var(--store-muted);
+        font-size: 0.72rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+
+      .cart-items {
+        display: grid;
+        gap: 10px;
+      }
+
+      .cart-item {
+        padding: 12px 0;
+        border-bottom: 1px solid rgba(16, 23, 19, 0.08);
+      }
+
+      .cart-item-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: flex-start;
+      }
+
+      .cart-item strong {
+        display: block;
+        font-size: 0.96rem;
+        margin-bottom: 4px;
+      }
+
+      .cart-item small {
+        color: var(--store-muted);
+        line-height: 1.5;
+      }
+
+      .remove-button {
+        border: none;
+        background: transparent;
+        color: var(--forest-primary);
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .cart-summary {
+        margin-top: 18px;
+        padding-top: 16px;
+        border-top: 1px solid rgba(16, 23, 19, 0.08);
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 14px;
+        margin-bottom: 8px;
+        color: var(--store-muted);
+      }
+
+      .summary-row.total {
+        margin-top: 10px;
+        font-weight: 800;
+        color: var(--forest-primary);
+      }
+
+      .checkout-box {
+        margin-top: 20px;
+        padding-top: 18px;
+        border-top: 1px solid rgba(16, 23, 19, 0.08);
+      }
+
+      .checkout-box p {
+        margin: 0 0 16px;
+        color: var(--store-muted);
+        line-height: 1.7;
+      }
+
+      .checkout-form {
+        display: grid;
+        gap: 12px;
+      }
+
+      .checkout-field {
+        display: grid;
+        gap: 8px;
+      }
+
+      .checkout-field label {
+        font-size: 0.62rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(23, 29, 26, 0.65);
+      }
+
+      .checkout-field input,
+      .checkout-field select,
+      .checkout-field textarea {
+        width: 100%;
+        min-height: 44px;
+        border: 1px solid rgba(16, 23, 19, 0.12);
+        border-radius: 12px;
+        background: #f7f4ee;
+        padding: 0 12px;
+        font: inherit;
+        color: var(--text);
+      }
+
+      .checkout-field textarea {
+        min-height: 110px;
+        padding-top: 12px;
+      }
+
+      .checkout-submit {
+        margin-top: 8px;
+      }
+
+      .checkout-status {
+        display: none;
+        margin-top: 12px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        line-height: 1.6;
+      }
+
+      .checkout-status.is-visible {
+        display: block;
+      }
+
+      .checkout-status.error {
+        background: rgba(139, 62, 62, 0.08);
+        color: #592a2a;
+      }
+
+      .checkout-status.info {
+        background: rgba(183, 161, 106, 0.12);
+        color: var(--forest-primary);
+      }
+
+      .site-footer {
+        margin-top: 34px;
+        border-top: 1px solid rgba(16, 23, 19, 0.08);
+        background: rgba(255, 255, 255, 0.42);
+      }
+
+      .site-footer-inner {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 26px 32px 42px;
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+      }
+
+      .site-footer h4 {
+        margin: 0 0 12px;
+        font-size: 0.7rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--forest-primary);
+      }
+
+      .site-footer p,
+      .site-footer a {
+        margin: 0;
+        color: rgba(23, 29, 26, 0.74);
+        text-decoration: none;
+        line-height: 1.8;
+        font-size: 0.94rem;
+      }
+
+      .site-footer a:hover {
+        text-decoration: underline;
+      }
+
+      .site-footer small {
+        display: block;
+        margin-top: 18px;
+        color: rgba(23, 29, 26, 0.62);
+        font-size: 0.72rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      @media (max-width: 1100px) {
+        .store-header {
+          grid-template-columns: 1fr;
+          justify-items: stretch;
+        }
+
+        .store-left,
+        .store-right {
+          width: 100%;
+        }
+
+        .store-nav {
+          justify-content: flex-start;
+        }
+
+        .shop-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .cart-panel {
+          position: static;
+        }
+      }
+
+      @media (max-width: 820px) {
+        .catalog-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .category-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .site-footer-inner {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+
+      @media (max-width: 620px) {
+        .page-content {
+          padding: 0 18px 56px;
+        }
+
+        .store-strip {
+          letter-spacing: 0.08em;
+          padding: 12px 14px;
+        }
+
+        .catalog-grid,
+        .category-grid,
+        .site-footer-inner {
+          grid-template-columns: 1fr;
+        }
+
+        .catalog-toolbar {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .store-right {
+          justify-content: space-between;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="header-inner">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="./index.html#home">Home</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./experiences.html">Experiences</a>
+            <a href="./store.html">Store</a>
+            <a href="./calendar.html">Calendar</a>
+            <a href="./contact.html">Contact</a>
+          </nav>
+          <a class="button button-ghost header-button" href="./contact.html">Start your inquiry</a>
+        </div>
+        <div class="brand" aria-label="Off The Grid Events logo">
+          <img class="brand-logo" src="logos/otg white.png" alt="Off The Grid Events logo" />
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="store-strip">Shopping and outdoor gear hire for approved OTG experiences. Prices and rental rates remain subject to confirmation.</div>
+
+        <header class="store-header" aria-label="OTG store header">
+          <a class="store-logo-wrap" href="./index.html" aria-label="Back to homepage">
+            <img src="logos/otg white.png" alt="OTG logo" />
+          </a>
+
+          <label class="store-search" aria-label="Search products">
+            <input id="store-search" type="search" placeholder="Search gear, apparel and essentials" />
+          </label>
+
+          <nav class="store-nav" aria-label="Store categories">
+            <button type="button" class="store-nav-btn is-active" data-category="All">All</button>
+            <button type="button" class="store-nav-btn" data-category="OTG Merchandise">Merchandise</button>
+            <button type="button" class="store-nav-btn" data-category="Camping Tents">Tents</button>
+            <button type="button" class="store-nav-btn" data-category="Braai Stands & Accessories">Braai</button>
+            <button type="button" class="store-nav-btn" data-category="Camping Equipment">Camp gear</button>
+          </nav>
+
+          <div class="store-right">
+            <a class="store-link" href="./experiences.html">Back to experiences</a>
+            <button class="store-cart-button" type="button" aria-label="Open cart">
+              🛒
+              <span id="cart-count">0</span>
+            </button>
+          </div>
+        </header>
+
+        <div class="mode-panel">
+          <div class="mode-switch" aria-label="Shopping modes">
+            <button type="button" class="mode-btn is-active" data-mode="all">All</button>
+            <button type="button" class="mode-btn" data-mode="merch">Shop Merchandise</button>
+            <button type="button" class="mode-btn" data-mode="rental">Rent Outdoor Gear</button>
+          </div>
+        </div>
+
+        <section class="welcome-banner" aria-labelledby="welcome-heading">
+          <h2 id="welcome-heading">Everything for Your Next Outdoor Escape.</h2>
+        </section>
+
+        <section class="category-panel" aria-label="Browse product categories">
+          <div class="category-grid">
+            <button class="category-tile" type="button" data-category="OTG Merchandise" style="background-image: url('https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=800&q=80');">
+              <span>OTG Apparel</span>
+            </button>
+            <button class="category-tile" type="button" data-category="Camping Tents" style="background-image: url('https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80');">
+              <span>Camping Tents</span>
+            </button>
+            <button class="category-tile" type="button" data-category="Braai Stands & Accessories" style="background-image: url('https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=800&q=80');">
+              <span>Braai Stands</span>
+            </button>
+            <button class="category-tile" type="button" data-category="Camping Equipment" style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80');">
+              <span>Camping Furniture</span>
+            </button>
+            <button class="category-tile" type="button" data-category="Outdoor Essentials" style="background-image: url('https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=800&q=80');">
+              <span>Outdoor Accessories</span>
+            </button>
+          </div>
+        </section>
+
+        <div class="shop-layout">
+          <main class="catalog-panel" aria-label="Product catalog">
+            <div class="catalog-toolbar">
+              <p id="results-label">0 items</p>
+              <label class="sort-field" aria-label="Sort products">
+                Sort by
+                <select id="sort-select">
+                  <option value="featured">Featured</option>
+                  <option value="name-asc">Name A–Z</option>
+                  <option value="name-desc">Name Z–A</option>
+                  <option value="price-asc">Price: lowest first</option>
+                  <option value="price-desc">Price: highest first</option>
+                </select>
+              </label>
+            </div>
+
+            <div id="catalog-grid" class="catalog-grid" aria-live="polite"></div>
+            <div id="no-results" class="empty-state hidden">No products match your search. Try a different keyword or category.</div>
+          </main>
+
+          <aside class="cart-panel" aria-label="Shopping basket">
+            <div class="cart-header">
+              <h3>Your basket</h3>
+              <span id="cart-badge">0 items</span>
+            </div>
+            <div id="cart-items" class="cart-items"></div>
+
+            <div class="cart-summary">
+              <div class="summary-row">
+                <span>Merchandise</span>
+                <strong id="merchandise-subtotal">USD 0.00</strong>
+              </div>
+              <div class="summary-row">
+                <span>Rental requests</span>
+                <strong id="rental-subtotal">0</strong>
+              </div>
+              <div class="summary-row total">
+                <span>Total</span>
+                <strong id="basket-total">USD 0.00</strong>
+              </div>
+            </div>
+
+            <div class="checkout-box">
+              <p>We do not process payments, reserve stock, or confirm delivery online yet. Use this review form to send your request for OTG approval.</p>
+
+              <form id="checkout-form" class="checkout-form" novalidate>
+                <div class="checkout-field">
+                  <label for="customer-name">Full name</label>
+                  <input id="customer-name" name="customer-name" type="text" required />
+                </div>
+
+                <div class="checkout-field">
+                  <label for="customer-email">Email address</label>
+                  <input id="customer-email" name="customer-email" type="email" required />
+                </div>
+
+                <div class="checkout-field">
+                  <label for="experience-field">Experience or trip</label>
+                  <input id="experience-field" name="experience-field" type="text" required placeholder="Which OTG experience are you planning?" />
+                </div>
+
+                <div class="checkout-field">
+                  <label for="request-type">Request type</label>
+                  <select id="request-type" name="request-type" required>
+                    <option value="">Select a request type</option>
+                    <option value="Merchandise purchase enquiry">Merchandise purchase enquiry</option>
+                    <option value="Equipment rental enquiry">Equipment rental enquiry</option>
+                    <option value="Combined order request">Combined order request</option>
+                  </select>
+                </div>
+
+                <div class="checkout-field">
+                  <label for="customer-message">Message</label>
+                  <textarea id="customer-message" name="customer-message" required placeholder="Share your preferred dates, group size, collection preference, and any items you would like OTG to review."></textarea>
+                </div>
+
+                <button class="button button-primary checkout-submit" type="submit">Send review request</button>
+                <div id="checkout-status" class="checkout-status" aria-live="polite"></div>
+              </form>
+            </div>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          <div>
+            <h4>OTG</h4>
+            <p><a href="./about-us.html">About us</a></p>
+            <p><a href="./experiences.html">Experiences</a></p>
+            <p><a href="./store.html">Store</a></p>
+          </div>
+          <div>
+            <h4>Planning</h4>
+            <p><a href="./calendar.html">Calendar</a></p>
+            <p><a href="./booking-policy.html">Booking policy</a></p>
+            <p><a href="./cancellation-refund.html">Cancellations</a></p>
+          </div>
+          <div>
+            <h4>Visit</h4>
+            <p><a href="./contact.html">Contact</a></p>
+            <p><a href="./privacy.html">Privacy</a></p>
+            <p><a href="./terms.html">Terms</a></p>
+          </div>
+          <div>
+            <h4>Approved details</h4>
+            <p>Public business details remain subject to approval before publication.</p>
+            <small>Off The Grid Events</small>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="store-data.js"></script>
+    <script>
+      (function () {
+        const catalog = window.otgStoreData.catalogue || [];
+        const state = {
+          query: "",
+          category: "All",
+          mode: "all",
+          sort: "featured",
+          cart: []
+        };
+
+        const catalogGrid = document.getElementById("catalog-grid");
+        const searchInput = document.getElementById("store-search");
+        const sortSelect = document.getElementById("sort-select");
+        const resultsLabel = document.getElementById("results-label");
+        const noResults = document.getElementById("no-results");
+        const cartCount = document.getElementById("cart-count");
+        const cartBadge = document.getElementById("cart-badge");
+        const cartItems = document.getElementById("cart-items");
+        const merchandiseSubtotal = document.getElementById("merchandise-subtotal");
+        const rentalSubtotal = document.getElementById("rental-subtotal");
+        const basketTotal = document.getElementById("basket-total");
+        const checkoutForm = document.getElementById("checkout-form");
+        const checkoutStatus = document.getElementById("checkout-status");
+
+        function formatMoney(amount) {
+          if (typeof amount !== "number" || Number.isNaN(amount)) {
+            return "USD 0.00";
+          }
+          return new Intl.NumberFormat("en-US", {
+            style: "currency",
+            currency: "USD",
+            minimumFractionDigits: 2
+          }).format(amount);
+        }
+
+        function getPriceNumeric(item) {
+          return item.approved && typeof item.price === "number" ? item.price : Number.POSITIVE_INFINITY;
+        }
+
+        function getSearchText(item) {
+          return [
+            item.name,
+            item.description,
+            item.category,
+            item.variant,
+            item.specifications,
+            item.availability,
+            item.type
+          ].join(" ").toLowerCase();
+        }
+
+        function getVisibleProducts() {
+          const search = state.query.trim().toLowerCase();
+          let list = (catalog || []).filter((item) => {
+            const categoryMatch = state.category === "All" || item.category === state.category;
+            const modeMatch = state.mode === "all" || (state.mode === "merch" ? item.type === "sale" : item.type === "rental");
+            const searchMatch = !search || getSearchText(item).includes(search);
+            return categoryMatch && modeMatch && searchMatch;
+          });
+
+          switch (state.sort) {
+            case "name-asc":
+              list.sort((a, b) => a.name.localeCompare(b.name));
+              break;
+            case "name-desc":
+              list.sort((a, b) => b.name.localeCompare(a.name));
+              break;
+            case "price-asc":
+              list.sort((a, b) => {
+                const diff = getPriceNumeric(a) - getPriceNumeric(b);
+                return diff === 0 ? a.name.localeCompare(b.name) : diff;
+              });
+              break;
+            case "price-desc":
+              list.sort((a, b) => {
+                const diff = getPriceNumeric(b) - getPriceNumeric(a);
+                return diff === 0 ? a.name.localeCompare(b.name) : diff;
+              });
+              break;
+            default:
+              list = list.sort((a, b) => a.name.localeCompare(b.name));
+          }
+
+          return list;
+        }
+
+        function productMarkup(item) {
+          const priceText = item.approved && typeof item.price === "number" ? formatMoney(item.price) : "Price to be confirmed";
+          const priceLabel = item.type === "sale" ? "Price" : "Rental rate";
+          const itemTypeLabel = item.type === "sale" ? "Buy" : "Rent";
+          const statusClass = item.approved ? "confirmed" : "pending";
+          const statusText = item.approved ? "Confirmed" : "Draft";
+          const descriptionId = `product-desc-${item.id}`;
+
+          return `
+            <article class="product-card" data-id="${item.id}" data-type="${item.type}">
+              <div class="product-image">
+                <img src="${item.image}" alt="${item.name}" />
+              </div>
+              <div class="product-body">
+                <div class="pill-row">
+                  <span class="product-type">${itemTypeLabel}</span>
+                  <span class="product-status ${statusClass}">${statusText}</span>
+                </div>
+                <h3>${item.name}</h3>
+                <div class="product-copy">
+                  <p class="product-description" id="${descriptionId}" data-description-id="${item.id}">${item.description}</p>
+                  <button type="button" class="text-toggle" data-toggle-description="${item.id}" aria-expanded="false" aria-controls="${descriptionId}">Read more</button>
+                </div>
+
+                <div class="detail-strip">
+                  <div class="detail-item">
+                    <span>${priceLabel}</span>
+                    <strong>${priceText}</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>${item.type === "sale" ? "Category" : "Capacity"}</span>
+                    <strong>${item.variant || "Pending review"}</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>Availability</span>
+                    <strong>${item.availability || "Pending confirmation"}</strong>
+                  </div>
+                  <div class="detail-item">
+                    <span>Type</span>
+                    <strong>${item.category}</strong>
+                  </div>
+                </div>
+
+                <div class="product-actions">
+                  <label class="qty-input" aria-label="Quantity for ${item.name}">
+                    <span>Qty</span>
+                    <input type="number" min="1" max="99" value="1" class="item-qty" />
+                  </label>
+                  <button type="button" class="${item.type === "sale" ? "primary-action" : "secondary-action"} product-button" data-id="${item.id}">
+                    ${item.type === "sale" ? "Add to cart" : "Request rental"}
+                  </button>
+                </div>
+              </div>
+            </article>
+          `;
+        }
+
+        function renderProducts() {
+          const list = getVisibleProducts();
+          resultsLabel.textContent = `${list.length} item${list.length === 1 ? "" : "s"}`;
+
+          catalogGrid.innerHTML = list.length
+            ? list.map(productMarkup).join("")
+            : "";
+
+          noResults.classList.toggle("hidden", list.length > 0);
+        }
+
+        function addToCart(itemId, qty) {
+          const product = (catalog || []).find((item) => item.id === itemId);
+          if (!product) return;
+
+          const existing = state.cart.find((entry) => entry.id === itemId && entry.type === product.type);
+          if (existing) {
+            existing.quantity += qty;
+            return;
+          }
+
+          state.cart.push({
+            id: product.id,
+            type: product.type,
+            name: product.name,
+            quantity: qty,
+            unitPrice: typeof product.price === "number" ? product.price : 0,
+            approvedPrice: Boolean(product.approved && typeof product.price === "number")
+          });
+        }
+
+        function updateCartView() {
+          const totalItems = state.cart.reduce((sum, item) => sum + item.quantity, 0);
+          cartCount.textContent = String(totalItems);
+          cartBadge.textContent = `${totalItems} item${totalItems === 1 ? "" : "s"}`;
+
+          if (!state.cart.length) {
+            cartItems.innerHTML = '<div class="empty-state">Your basket is empty. Add a product or request a rental to review it here.</div>';
+            merchandiseSubtotal.textContent = formatMoney(0);
+            rentalSubtotal.textContent = "0";
+            basketTotal.textContent = formatMoney(0);
+            return;
+          }
+
+          cartItems.innerHTML = state.cart
+            .map((item) => `
+              <div class="cart-item">
+                <div class="cart-item-row">
+                  <div>
+                    <strong>${item.name}</strong>
+                    <small>Qty: ${item.quantity} · ${item.type === "sale" ? "Purchase" : "Rental request"}</small>
+                  </div>
+                  <button type="button" class="remove-button" data-remove-id="${item.id}" data-remove-type="${item.type}">Remove</button>
+                </div>
+              </div>
+            `)
+            .join("");
+
+          const merchandiseTotal = state.cart
+            .filter((item) => item.type === "sale")
+            .reduce((sum, item) => sum + (item.approvedPrice ? item.unitPrice * item.quantity : 0), 0);
+
+          const rentalCount = state.cart.filter((item) => item.type === "rental").length;
+          merchandiseSubtotal.textContent = formatMoney(merchandiseTotal);
+          rentalSubtotal.textContent = String(rentalCount);
+          basketTotal.textContent = formatMoney(merchandiseTotal);
+        }
+
+        function setStatus(message, variant) {
+          checkoutStatus.textContent = message;
+          checkoutStatus.className = `checkout-status is-visible ${variant}`;
+        }
+
+        document.getElementById("store-search").addEventListener("input", (event) => {
+          state.query = event.target.value;
+          renderProducts();
+        });
+
+        sortSelect.addEventListener("change", (event) => {
+          state.sort = event.target.value;
+          renderProducts();
+        });
+
+        document.querySelectorAll(".store-nav-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            document.querySelectorAll(".store-nav-btn").forEach((btn) => btn.classList.toggle("is-active", btn === button));
+            state.category = button.dataset.category;
+            renderProducts();
+          });
+        });
+
+        document.querySelectorAll(".mode-btn").forEach((button) => {
+          button.addEventListener("click", () => {
+            document.querySelectorAll(".mode-btn").forEach((btn) => btn.classList.toggle("is-active", btn === button));
+            state.mode = button.dataset.mode;
+            renderProducts();
+          });
+        });
+
+        document.querySelectorAll(".category-tile").forEach((button) => {
+          button.addEventListener("click", () => {
+            state.category = button.dataset.category;
+            document.querySelectorAll(".store-nav-btn").forEach((navBtn) => {
+              navBtn.classList.toggle("is-active", navBtn.dataset.category === state.category);
+            });
+            renderProducts();
+          });
+        });
+
+        document.addEventListener("click", (event) => {
+          const toggleButton = event.target.closest(".text-toggle");
+          if (toggleButton) {
+            const itemId = toggleButton.dataset.toggleDescription;
+            const description = document.querySelector(`.product-description[data-description-id="${itemId}"]`);
+            const isExpanded = description.classList.contains("is-expanded");
+
+            description.classList.toggle("is-expanded", !isExpanded);
+            toggleButton.setAttribute("aria-expanded", String(!isExpanded));
+            toggleButton.textContent = isExpanded ? "Read more" : "Read less";
+            return;
+          }
+
+          const productButton = event.target.closest(".product-button");
+          if (productButton) {
+            const card = productButton.closest(".product-card");
+            const id = productButton.dataset.id;
+            const qtyInput = card.querySelector(".item-qty");
+            const qty = Math.max(1, Number(qtyInput.value) || 1);
+            addToCart(id, qty);
+            updateCartView();
+            return;
+          }
+
+          const removeButton = event.target.closest(".remove-button");
+          if (removeButton) {
+            const removeId = removeButton.dataset.removeId;
+            const removeType = removeButton.dataset.removeType;
+            state.cart = state.cart.filter((entry) => !(entry.id === removeId && entry.type === removeType));
+            updateCartView();
+          }
+        });
+
+        checkoutForm.addEventListener("submit", (event) => {
+          event.preventDefault();
+
+          const fullName = document.getElementById("customer-name").value.trim();
+          const email = document.getElementById("customer-email").value.trim();
+          const experience = document.getElementById("experience-field").value.trim();
+          const message = document.getElementById("customer-message").value.trim();
+          const requestType = document.getElementById("request-type").value.trim();
+          const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+          if (!fullName || !email || !experience || !message || !requestType || !emailPattern.test(email)) {
+            setStatus("Please complete all required fields, including a valid email address, your experience, and a message before sending your review request.", "error");
+            return;
+          }
+
+          if (!state.cart.length) {
+            setStatus("Your basket is empty. Add a product or rental request before sending your enquiry for review.", "error");
+            return;
+          }
+
+          setStatus("This request has not been submitted to a live backend yet. OTG will review it manually before confirming stock, pricing, or rental availability.", "info");
+          checkoutForm.reset();
+          state.cart = [];
+          updateCartView();
+        });
+
+        renderProducts();
+        updateCartView();
+      })();
+    </script>
+  </body>
+</html>
