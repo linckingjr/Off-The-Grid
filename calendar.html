@@ -3,45 +3,136 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Calendar | OTG</title>
-    <meta name="description" content="Upcoming OTG experiences and planning windows." />
+    <title>OTG Events Calendar | OTG</title>
+    <meta name="description" content="The OTG Events Calendar shares upcoming experiences as they are confirmed and approved." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="styles.css" />
     <style>
       .page-content {
-        max-width: 1100px;
+        max-width: 1180px;
         margin: 40px auto 0;
         padding: 0 32px 80px;
       }
-      .calendar-grid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 24px;
+      .calendar-intro {
+        max-width: 720px;
+        margin-bottom: 28px;
       }
-      .calendar-card {
+      .calendar-hero {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        gap: 24px;
+        align-items: stretch;
+      }
+      .calendar-panel,
+      .calendar-empty {
         background: #fffdf9;
         border: 1px solid rgba(16, 23, 19, 0.08);
-        border-radius: 24px;
+        border-radius: 28px;
         padding: 28px;
-        box-shadow: 0 12px 28px rgba(16, 23, 19, 0.06);
+        box-shadow: 0 15px 28px rgba(16, 23, 19, 0.05);
       }
-      .calendar-card h2 {
+      .calendar-empty {
+        display: grid;
+        place-items: center;
+        text-align: center;
+        min-height: 260px;
+      }
+      .calendar-empty h2 {
         margin: 0 0 12px;
         font-family: "Cormorant Garamond", serif;
-        font-size: clamp(2.1rem, 3vw, 3rem);
+        font-size: clamp(2.4rem, 3vw, 3.3rem);
         line-height: 0.96;
         letter-spacing: -0.04em;
       }
-      .calendar-list {
-        margin: 18px 0 0;
-        padding-left: 18px;
+      .calendar-empty p {
+        margin: 0 0 22px;
+        max-width: 520px;
         color: rgba(23,29,26,0.78);
-        line-height: 1.9;
+        line-height: 1.8;
+      }
+      .calendar-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 14px;
+        justify-content: center;
+      }
+      .calendar-panel h2 {
+        margin: 0 0 12px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.2rem, 3vw, 3.2rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+      }
+      .calendar-panel p {
+        margin: 0;
+        color: rgba(23,29,26,0.78);
+        line-height: 1.8;
+      }
+      .events-list {
+        display: grid;
+        gap: 18px;
+        margin-top: 28px;
+      }
+      .event-row {
+        display: grid;
+        grid-template-columns: 200px 1fr auto;
+        gap: 18px;
+        align-items: center;
+        padding: 18px 20px;
+        border-radius: 20px;
+        background: rgba(16, 23, 19, 0.02);
+        border: 1px solid rgba(16, 23, 19, 0.08);
+      }
+      .event-date {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 72px;
+        padding: 12px 14px;
+        border-radius: 14px;
+        background: rgba(183, 161, 106, 0.12);
+        color: var(--forest-primary);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .event-row h3 {
+        margin: 0 0 6px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2rem, 2.3vw, 2.6rem);
+        line-height: 0.98;
+        letter-spacing: -0.04em;
+      }
+      .event-row p {
+        margin: 0;
+        color: rgba(23,29,26,0.78);
+        line-height: 1.7;
+      }
+      .event-status {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 999px;
+        padding: 8px 12px;
+        font-size: 0.66rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+      }
+      .event-status.confirmed {
+        color: var(--forest-primary);
+        background: rgba(32, 58, 45, 0.08);
+      }
+      .event-status.draft {
+        color: rgba(23,29,26,0.8);
+        background: rgba(16, 23, 19, 0.04);
       }
       @media (max-width: 780px) {
-        .calendar-grid { grid-template-columns: 1fr; }
+        .calendar-hero { grid-template-columns: 1fr; }
+        .event-row { grid-template-columns: 1fr; }
       }
     </style>
   </head>
@@ -64,31 +155,72 @@
       </header>
 
       <main class="page-content">
-        <p class="kicker">Calendar</p>
-        <h1 style="margin: 0 0 28px; font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 5rem); line-height: 0.9; letter-spacing: -0.05em; color: #171d1a;">Upcoming windows and upcoming ideas.</h1>
+        <div class="calendar-intro">
+          <p class="kicker">OTG Events Calendar</p>
+          <h1 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: clamp(3.2rem, 5vw, 5.4rem); line-height: 0.9; letter-spacing: -0.05em; color: #171d1a;">New experiences are arriving soon.</h1>
+          <p style="margin: 18px 0 0; color: rgba(23,29,26,0.78); line-height: 1.8; max-width: 680px;">
+            OTG is building a thoughtful calendar of outdoor escapes, private retreats and immersive adventures. When dates are confirmed and approved, they will appear here with clear booking status.
+          </p>
+        </div>
 
-        <div class="calendar-grid">
-          <article class="calendar-card">
-            <p class="kicker">Draft windows</p>
-            <h2>Current focus</h2>
-            <ul class="calendar-list">
-              <li>Survival Camp – dates to be confirmed</li>
-              <li>Interim enquiries open for custom group escapes</li>
-              <li>Private couple retreat concepts under review</li>
-            </ul>
-          </article>
+        <div class="calendar-hero">
+          <section class="calendar-panel" aria-live="polite">
+            <p class="kicker">Upcoming experiences</p>
+            <h2>On the horizon</h2>
+            <p>Confirmed dates and approved experiences will be added here as soon as they are ready to be shared publicly.</p>
+            <div class="events-list" id="calendar-events"></div>
+          </section>
 
-          <article class="calendar-card">
-            <p class="kicker">Planning notes</p>
-            <h2>What is still pending</h2>
-            <ul class="calendar-list">
-              <li>Final dates must be approved before publication</li>
-              <li>Pricing and venue details remain subject to verification</li>
-              <li>Availability should be confirmed directly with OTG</li>
-            </ul>
-          </article>
+          <aside class="calendar-empty" aria-live="polite">
+            <div>
+              <h2>New experiences are being prepared.</h2>
+              <p>Confirmed dates will appear here as soon as they are announced.</p>
+              <div class="calendar-actions">
+                <a class="button button-primary" href="./experiences.html">Explore experiences</a>
+                <a class="button button-secondary" href="./contact.html">Contact OTG</a>
+              </div>
+            </div>
+          </aside>
         </div>
       </main>
     </div>
+
+    <script src="events-data.js"></script>
+    <script>
+      (function () {
+        const eventsRoot = document.getElementById('calendar-events');
+        const events = Array.isArray(window.otgEventData) ? window.otgEventData : [];
+        const confirmed = events.filter((event) => {
+          const dateValue = event.startDate || event.displayDate || '';
+          return dateValue && !/draft|to be confirmed|tbc|pending/i.test(dateValue);
+        });
+
+        if (!eventsRoot) return;
+
+        if (!confirmed.length) {
+          eventsRoot.innerHTML = '<div class="event-row"><div class="event-date">Waiting</div><div><h3>Calendar opening soon</h3><p>New experiences are being prepared. Confirmed dates will appear here as soon as they are announced.</p></div><div class="event-status draft">Draft</div></div>';
+          return;
+        }
+
+        eventsRoot.innerHTML = confirmed
+          .map((event) => {
+            const statusClass = (event.publicationStatus === 'confirmed' || event.status === 'Confirmed') ? 'confirmed' : 'draft';
+            const statusText = (event.publicationStatus === 'confirmed' || event.status === 'Confirmed') ? 'Confirmed' : 'Draft';
+            const dateValue = event.startDate || event.displayDate || 'Dates to be confirmed';
+            const venueLabel = event.venue || event.destination || 'Venue to be confirmed';
+            return `
+              <article class="event-row">
+                <div class="event-date">${dateValue}</div>
+                <div>
+                  <h3>${event.name}</h3>
+                  <p>${venueLabel}</p>
+                </div>
+                <div class="event-status ${statusClass}">${statusText}</div>
+              </article>
+            `;
+          })
+          .join('');
+      })();
+    </script>
   </body>
 </html>

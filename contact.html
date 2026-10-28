@@ -53,7 +53,41 @@
         font: inherit;
         color: var(--text);
       }
+      .field input[aria-invalid="true"],
+      .field textarea[aria-invalid="true"],
+      .field select[aria-invalid="true"] {
+        border-color: #8b3e3e;
+        background: rgba(139, 62, 62, 0.04);
+      }
       .field textarea { min-height: 180px; resize: vertical; }
+      .field-error {
+        display: none;
+        color: #7d2a2a;
+        font-size: 0.75rem;
+        line-height: 1.4;
+      }
+      .field-error.is-visible {
+        display: block;
+      }
+      .status-message {
+        margin-top: 6px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        font-size: 0.88rem;
+        line-height: 1.6;
+        display: none;
+      }
+      .status-message.is-visible {
+        display: block;
+      }
+      .status-message.error {
+        background: rgba(139, 62, 62, 0.08);
+        color: #592a2a;
+      }
+      .status-message.info {
+        background: rgba(183, 161, 106, 0.12);
+        color: var(--forest-primary);
+      }
       @media (max-width: 780px) {
         .contact-layout { grid-template-columns: 1fr; }
       }
@@ -88,33 +122,139 @@
           </section>
 
           <section class="contact-panel" aria-label="Enquiry form">
-            <form class="field-grid">
+            <form id="contact-form" class="field-grid" novalidate>
               <div class="field">
                 <label for="name">Full name</label>
-                <input id="name" name="name" type="text" placeholder="Your name" />
+                <input id="name" name="name" type="text" placeholder="Your name" required aria-describedby="name-error" />
+                <span id="name-error" class="field-error" aria-live="polite">Please enter your full name.</span>
               </div>
+
               <div class="field">
                 <label for="email">Email address</label>
-                <input id="email" name="email" type="email" placeholder="you@example.com" />
+                <input id="email" name="email" type="email" placeholder="you@example.com" required aria-describedby="email-error" />
+                <span id="email-error" class="field-error" aria-live="polite">Please enter a valid email address.</span>
               </div>
+
               <div class="field">
-                <label for="event">Experience of interest</label>
-                <select id="event" name="event">
-                  <option>Survival Camp</option>
-                  <option>Couples Retreat</option>
-                  <option>Private Group Escape</option>
-                  <option>Still deciding</option>
+                <label for="experience">Experience of interest</label>
+                <select id="experience" name="experience" required aria-describedby="experience-error">
+                  <option value="">Select an experience</option>
+                  <option value="Survival Camp">Survival Camp</option>
+                  <option value="Couples Retreat">Couples Retreat</option>
+                  <option value="Private Group Escape">Private Group Escape</option>
+                  <option value="Still deciding">Still deciding</option>
                 </select>
+                <span id="experience-error" class="field-error" aria-live="polite">Please choose the experience you are interested in.</span>
               </div>
+
               <div class="field">
                 <label for="message">Tell us a little about your plans</label>
-                <textarea id="message" name="message" placeholder="Share dates, group size, preferred setting, and anything you’d like us to know."></textarea>
+                <textarea id="message" name="message" placeholder="Share dates, group size, preferred setting, and anything you’d like us to know." required aria-describedby="message-error"></textarea>
+                <span id="message-error" class="field-error" aria-live="polite">Please add a short message with your enquiry.</span>
               </div>
-              <button class="button button-primary" type="submit">Send enquiry</button>
+
+              <button class="button button-primary" id="submit-button" type="submit">Send enquiry</button>
+              <div id="form-status" class="status-message" role="status" aria-live="polite" aria-atomic="true"></div>
             </form>
           </section>
         </div>
       </main>
     </div>
+
+    <script>
+      (function () {
+        const form = document.getElementById('contact-form');
+        const submitButton = document.getElementById('submit-button');
+        const statusBox = document.getElementById('form-status');
+        const fields = [
+          { name: 'name', element: document.getElementById('name'), error: document.getElementById('name-error') },
+          { name: 'email', element: document.getElementById('email'), error: document.getElementById('email-error') },
+          { name: 'experience', element: document.getElementById('experience'), error: document.getElementById('experience-error') },
+          { name: 'message', element: document.getElementById('message'), error: document.getElementById('message-error') }
+        ];
+
+        function showStatus(message, type) {
+          statusBox.textContent = message;
+          statusBox.className = 'status-message is-visible ' + type;
+        }
+
+        function hideStatus() {
+          statusBox.className = 'status-message';
+          statusBox.textContent = '';
+        }
+
+        function validateField(field) {
+          const value = field.element.value.trim();
+          let isValid = true;
+
+          if (field.name === 'name') {
+            isValid = value.length >= 2;
+          }
+
+          if (field.name === 'email') {
+            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            isValid = emailPattern.test(value);
+          }
+
+          if (field.name === 'experience') {
+            isValid = Boolean(value);
+          }
+
+          if (field.name === 'message') {
+            isValid = value.length >= 12;
+          }
+
+          field.element.setAttribute('aria-invalid', String(!isValid));
+          if (isValid) {
+            field.error.classList.remove('is-visible');
+          } else {
+            field.error.classList.add('is-visible');
+          }
+
+          return isValid;
+        }
+
+        fields.forEach((field) => {
+          field.element.addEventListener('input', () => {
+            if (field.element.value.trim()) {
+              validateField(field);
+            }
+            if (!statusBox.classList.contains('is-visible')) {
+              hideStatus();
+            }
+          });
+        });
+
+        form.addEventListener('submit', function (event) {
+          event.preventDefault();
+          hideStatus();
+
+          const valid = fields.every((field) => validateField(field));
+
+          if (!valid) {
+            showStatus('Please complete the highlighted fields before trying again.', 'error');
+            return;
+          }
+
+          submitButton.disabled = true;
+          submitButton.textContent = 'Checking enquiry';
+
+          showStatus(
+            'This enquiry form is not connected to a live backend or verified email delivery service yet. Your message has NOT been sent. Please use an approved OTG contact channel when one is confirmed.',
+            'info'
+          );
+
+          window.setTimeout(() => {
+            submitButton.disabled = false;
+            submitButton.textContent = 'Send enquiry';
+            form.reset();
+            fields.forEach((field) => {
+              field.element.setAttribute('aria-invalid', 'false');
+              field.error.classList.remove('is-visible');
+            });
+          }, 1200);
+        });
+      })();
+    </script>
   </body>
 </html>
