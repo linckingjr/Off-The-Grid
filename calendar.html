@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Calendar | OTG</title>
+    <meta name="description" content="Upcoming OTG experiences and planning windows." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .page-content {
+        max-width: 1100px;
+        margin: 40px auto 0;
+        padding: 0 32px 80px;
+      }
+      .calendar-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 24px;
+      }
+      .calendar-card {
+        background: #fffdf9;
+        border: 1px solid rgba(16, 23, 19, 0.08);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 12px 28px rgba(16, 23, 19, 0.06);
+      }
+      .calendar-card h2 {
+        margin: 0 0 12px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.1rem, 3vw, 3rem);
+        line-height: 0.96;
+        letter-spacing: -0.04em;
+      }
+      .calendar-list {
+        margin: 18px 0 0;
+        padding-left: 18px;
+        color: rgba(23,29,26,0.78);
+        line-height: 1.9;
+      }
+      @media (max-width: 780px) {
+        .calendar-grid { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="header-inner">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="./index.html#home">Home</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./experiences.html">Experiences</a>
+            <a href="./calendar.html">Calendar</a>
+            <a href="./contact.html">Contact</a>
+          </nav>
+          <a class="button button-ghost header-button" href="./contact.html">Start your inquiry</a>
+        </div>
+        <div class="brand" aria-label="Off The Grid Events logo">
+          <img class="brand-logo" src="logos/otg white.png" alt="Off The Grid Events logo" />
+        </div>
+      </header>
+
+      <main class="page-content">
+        <p class="kicker">Calendar</p>
+        <h1 style="margin: 0 0 28px; font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 5rem); line-height: 0.9; letter-spacing: -0.05em; color: #171d1a;">Upcoming windows and upcoming ideas.</h1>
+
+        <div class="calendar-grid">
+          <article class="calendar-card">
+            <p class="kicker">Draft windows</p>
+            <h2>Current focus</h2>
+            <ul class="calendar-list">
+              <li>Survival Camp – dates to be confirmed</li>
+              <li>Interim enquiries open for custom group escapes</li>
+              <li>Private couple retreat concepts under review</li>
+            </ul>
+          </article>
+
+          <article class="calendar-card">
+            <p class="kicker">Planning notes</p>
+            <h2>What is still pending</h2>
+            <ul class="calendar-list">
+              <li>Final dates must be approved before publication</li>
+              <li>Pricing and venue details remain subject to verification</li>
+              <li>Availability should be confirmed directly with OTG</li>
+            </ul>
+          </article>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

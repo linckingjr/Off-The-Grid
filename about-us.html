@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us | OTG</title>
+    <meta name="description" content="About Off The Grid Events and the experiences we create." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body { background: #f6f2ea; }
+      .page-shell {
+        background: linear-gradient(180deg, #f6f2ea 0%, #f3f0e8 100%);
+      }
+      .page-content {
+        max-width: 1180px;
+        margin: 40px auto 0;
+        padding: 0 32px 80px;
+      }
+      .story-layout {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 32px;
+        align-items: center;
+      }
+      .story-visual {
+        min-height: 420px;
+        border-radius: 32px;
+        background:
+          linear-gradient(135deg, rgba(16, 23, 19, 0.18), rgba(16, 23, 19, 0.04)),
+          url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80') center/cover no-repeat;
+        box-shadow: 0 28px 60px rgba(16, 23, 19, 0.14);
+      }
+      .feature-card {
+        background: #fffdf9;
+        border: 1px solid rgba(16, 23, 19, 0.08);
+        border-radius: 24px;
+        padding: 28px;
+        box-shadow: 0 12px 28px rgba(16, 23, 19, 0.06);
+      }
+      .feature-card h3 {
+        margin: 12px 0 12px;
+        font-size: clamp(2rem, 2.5vw, 3rem);
+        line-height: 1;
+        font-family: "Cormorant Garamond", serif;
+      }
+      .feature-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: grid;
+        gap: 16px;
+      }
+      .feature-list li {
+        display: flex;
+        gap: 12px;
+        align-items: flex-start;
+        color: rgba(23, 29, 26, 0.78);
+        line-height: 1.6;
+      }
+      .feature-list li::before {
+        content: "•";
+        color: #b7a16a;
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+      @media (max-width: 780px) {
+        .story-layout { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="header-inner">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="./index.html#home">Home</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./experiences.html">Experiences</a>
+            <a href="./calendar.html">Calendar</a>
+            <a href="./contact.html">Contact</a>
+          </nav>
+          <a class="button button-ghost header-button" href="./contact.html">Start your inquiry</a>
+        </div>
+        <div class="brand" aria-label="Off The Grid Events logo">
+          <img class="brand-logo" src="logos/otg white.png" alt="Off The Grid Events logo" />
+        </div>
+      </header>
+
+      <main class="page-content">
+        <section class="story-layout" aria-labelledby="about-title">
+          <div>
+            <p class="kicker">About OTG</p>
+            <h1 id="about-title" style="margin: 0 0 18px; font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 5rem); line-height: 0.9; letter-spacing: -0.05em; color: #171d1a;">We design escapes that pull people out of routine and back into the moment.</h1>
+            <p style="margin: 0 0 22px; font-size: 1.08rem; line-height: 1.8; color: rgba(23,29,26,0.78);">
+              Off The Grid Events creates experiences shaped around nature, connection and space to breathe. We are not here to overload the schedule or chase noise. We curate trips, gatherings and escapes that feel considered, warm and genuinely restorative.
+            </p>
+            <p style="margin: 0; font-size: 1.08rem; line-height: 1.8; color: rgba(23,29,26,0.78);">
+              Every experience is designed to help people feel more present. Whether it is a weekend reset, a couples retreat, a team departure or a custom stay, the goal is the same: help people connect with each other and with the landscape around them.
+            </p>
+          </div>
+          <div class="story-visual" role="img" aria-label="Outdoor wilderness landscape with a travel escape atmosphere"></div>
+        </section>
+
+        <section class="feature-card" style="margin-top: 40px;">
+          <p class="kicker">The OTG approach</p>
+          <h3>Thoughtful, grounded and invitation-led.</h3>
+          <ul class="feature-list">
+            <li>We build experiences around pacing, atmosphere and intentional downtime rather than rushed itineraries.</li>
+            <li>We focus on group fit, comfort and clarity so guests feel looked after before they even arrive.</li>
+            <li>We keep the process personal and inquiry-led, because the right experience changes depending on the people involved.</li>
+          </ul>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

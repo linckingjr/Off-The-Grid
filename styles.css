@@ -20,6 +20,11 @@ html {
   scroll-behavior: smooth;
 }
 
+section[id],
+[id] {
+  scroll-margin-top: 110px;
+}
+
 body {
   margin: 0;
   overflow-x: hidden;
@@ -523,6 +528,7 @@ a {
   position: absolute;
   inset: 0;
   background: rgba(9, 13, 12, 0.68);
+  -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
 }
 
@@ -683,8 +689,18 @@ label {
   text-transform: uppercase;
 }
 
+.field-error {
+  min-height: 16px;
+  font-size: 0.66rem;
+  line-height: 1.4;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  color: #a33b2d;
+}
+
 input,
-textarea {
+textarea,
+select {
   width: 100%;
   border: 1px solid rgba(17, 22, 20, 0.12);
   border-radius: 14px;
@@ -695,9 +711,31 @@ textarea {
 }
 
 input:focus,
-textarea:focus {
+textarea:focus,
+select:focus {
   outline: 2px solid rgba(183, 161, 106, 0.38);
   border-color: rgba(183, 161, 106, 0.52);
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.checkbox-row input {
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+}
+
+.checkbox-row label {
+  display: flex;
+  gap: 10px;
+  text-transform: none;
+  letter-spacing: normal;
+  color: rgba(23, 29, 26, 0.82);
 }
 
 .booking-review {
@@ -1144,6 +1182,58 @@ textarea:focus {
   margin-top: 32px;
 }
 
+.about-otg {
+  max-width: var(--max-width);
+  margin: 56px auto 0;
+  padding: 56px 32px;
+  background: rgba(255, 255, 255, 0.26);
+  border: 1px solid rgba(17, 22, 20, 0.08);
+  border-radius: 28px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(260px, 0.85fr);
+  gap: 28px;
+  align-items: center;
+}
+
+.about-copy h2 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.7rem, 3.5vw, 4rem);
+  line-height: 0.96;
+  letter-spacing: -0.04em;
+  color: var(--text);
+}
+
+.about-copy p {
+  margin-top: 18px;
+  font-size: 1.04rem;
+  line-height: 1.8;
+  color: var(--text-soft);
+}
+
+.about-panel {
+  background: rgba(17, 22, 20, 0.96);
+  color: var(--white);
+  border-radius: 22px;
+  padding: 26px 24px;
+  box-shadow: 0 18px 34px rgba(16, 23, 19, 0.12);
+}
+
+.about-panel h3 {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brass);
+}
+
+.about-panel ul {
+  margin: 0;
+  padding-left: 18px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.82);
+}
+
 .philosophy {
   max-width: none;
   display: grid;
@@ -1179,6 +1269,76 @@ textarea:focus {
   background-size: cover;
   background-position: center;
   box-shadow: 0 30px 60px rgba(16, 23, 19, 0.12);
+}
+
+.policy-shell {
+  max-width: 980px;
+  margin: 32px auto 60px;
+  padding: 24px 20px 40px;
+}
+
+.policy-page {
+  background: rgba(255, 255, 255, 0.52);
+  border: 1px solid rgba(17, 22, 20, 0.08);
+  border-radius: 28px;
+  padding: 32px clamp(20px, 4vw, 48px);
+  box-shadow: 0 18px 40px rgba(16, 23, 19, 0.06);
+}
+
+.policy-intro {
+  margin-bottom: 26px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(17, 22, 20, 0.08);
+}
+
+.policy-tag {
+  display: inline-flex;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(183, 161, 106, 0.14);
+  color: var(--forest-primary);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.policy-page h1 {
+  margin: 18px 0 10px;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
+  color: var(--text);
+}
+
+.policy-page h2 {
+  margin: 28px 0 10px;
+  font-size: 1.2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--forest-primary);
+}
+
+.policy-page p,
+.policy-page li {
+  color: var(--text-soft);
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.policy-page ul,
+.policy-page ol {
+  padding-left: 22px;
+}
+
+.policy-page .approval-note {
+  margin-top: 24px;
+  padding: 18px 20px;
+  border-left: 4px solid var(--brass);
+  background: rgba(183, 161, 106, 0.08);
+  border-radius: 14px;
+  color: var(--text);
 }
 
 .experience-showcase {
@@ -1413,6 +1573,7 @@ textarea:focus {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
+  .about-otg,
   .philosophy,
   .experience-grid,
   .inquiry {

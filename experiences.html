@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Experiences | OTG</title>
+    <meta name="description" content="Explore the experiences offered by Off The Grid Events." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .page-content {
+        max-width: 1180px;
+        margin: 40px auto 0;
+        padding: 0 32px 80px;
+      }
+      .experience-stack {
+        display: grid;
+        gap: 28px;
+      }
+      .experience-item {
+        display: grid;
+        grid-template-columns: 0.9fr 1.1fr;
+        gap: 28px;
+        background: #fffdf9;
+        border: 1px solid rgba(16, 23, 19, 0.08);
+        border-radius: 28px;
+        overflow: hidden;
+        box-shadow: 0 15px 28px rgba(16, 23, 19, 0.06);
+      }
+      .experience-photo {
+        min-height: 300px;
+        background-size: cover;
+        background-position: center;
+      }
+      .experience-copy {
+        padding: 28px 28px 24px;
+      }
+      .experience-copy h2 {
+        margin: 0 0 12px;
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(2.4rem, 3vw, 3.4rem);
+        line-height: 0.95;
+        letter-spacing: -0.04em;
+        color: var(--text);
+      }
+      .experience-copy p {
+        margin: 0 0 14px;
+        color: rgba(23,29,26,0.78);
+        line-height: 1.7;
+      }
+      .experience-meta {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 18px;
+      }
+      .pill {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 8px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(16, 23, 19, 0.12);
+        background: rgba(16, 23, 19, 0.02);
+        font-size: 0.68rem;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--forest-primary);
+      }
+      @media (max-width: 780px) {
+        .experience-item { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="header-inner">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="./index.html#home">Home</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./experiences.html">Experiences</a>
+            <a href="./calendar.html">Calendar</a>
+            <a href="./contact.html">Contact</a>
+          </nav>
+          <a class="button button-ghost header-button" href="./contact.html">Start your inquiry</a>
+        </div>
+        <div class="brand" aria-label="Off The Grid Events logo">
+          <img class="brand-logo" src="logos/otg white.png" alt="Off The Grid Events logo" />
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div style="margin-bottom: 30px;">
+          <p class="kicker">Experiences</p>
+          <h1 style="margin: 0; font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 5rem); line-height: 0.9; letter-spacing: -0.05em; color: #171d1a;">Adventure, stillness and time away from the noise.</h1>
+        </div>
+
+        <div class="experience-stack">
+          <article class="experience-item">
+            <div class="experience-photo" style="background-image: url('https://images.unsplash.com/photo-1527631746610-bca00a040d60?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="experience-copy">
+              <p class="kicker" style="margin-bottom: 10px;">Adventure</p>
+              <h2>Survival Camp</h2>
+              <p>Built for guests who want a more immersive reset, this experience blends outdoor living, practical challenges and time to unwind under open skies. It is presented as a draft experience until final approval is confirmed.</p>
+              <p>Expect a connection-first atmosphere, simple comforts, campfire energy and a pace that feels grounding rather than rigid.</p>
+              <div class="experience-meta">
+                <span class="pill">Draft</span>
+                <span class="pill">Shalom Matopo</span>
+                <span class="pill">Inquiry only</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="experience-item">
+            <div class="experience-photo" style="background-image: url('https://images.unsplash.com/photo-1473448912268-2022ce9509d8?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="experience-copy">
+              <p class="kicker" style="margin-bottom: 10px;">Couples retreats</p>
+              <h2>February Valentine's Retreats</h2>
+              <p>Intimate, scenic escapes designed for couples wanting a slower pace and more meaningful time together. These retreats are still being shaped with final dates, package details and approval status to be confirmed.</p>
+              <p>Ideal for guests looking for restful scenery, elegant accommodation ideas and a private atmosphere far from everyday noise.</p>
+              <div class="experience-meta">
+                <span class="pill">Draft</span>
+                <span class="pill">TBC date</span>
+                <span class="pill">Adults only</span>
+              </div>
+            </div>
+          </article>
+
+          <article class="experience-item">
+            <div class="experience-photo" style="background-image: url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1200&q=80');"></div>
+            <div class="experience-copy">
+              <p class="kicker" style="margin-bottom: 10px;">Private groups</p>
+              <h2>Forest Weekends &amp; Group Escapes</h2>
+              <p>For families, friends, teams and private gatherings looking for a low-pressure escape with comfort, connection and memorable time outdoors. These experiences can be shaped around pace, purpose and the kind of reset the group is chasing.</p>
+              <p>Our approach remains inquiry-led so the final itinerary and logistics suit the people joining.</p>
+              <div class="experience-meta">
+                <span class="pill">Tailored</span>
+                <span class="pill">Custom fit</span>
+                <span class="pill">Inquiry only</span>
+              </div>
+            </div>
+          </article>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

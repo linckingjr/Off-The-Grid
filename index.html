@@ -15,6 +15,7 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="styles.css" />
+    <script src="site-config.js"></script>
     <script src="events-data.js"></script>
   </head>
   <body>
@@ -23,13 +24,13 @@
         <div class="header-inner">
           <nav class="site-nav" aria-label="Main navigation">
             <a href="#home">Home</a>
-            <a href="#experiences">Experiences</a>
-            <a href="#what-we-do">What We Do</a>
-            <a href="#story">Our Story</a>
-            <a href="#contact">Contact</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./experiences.html">Experiences</a>
+            <a href="./calendar.html">Calendar</a>
+            <a href="./contact.html">Contact</a>
           </nav>
 
-          <a class="button button-ghost header-button" href="#contact">Start your inquiry</a>
+          <a class="button button-ghost header-button" href="./contact.html">Start your inquiry</a>
         </div>
 
         <div class="brand" aria-label="Off The Grid Events logo">
@@ -51,8 +52,8 @@
             </p>
 
             <div class="hero-actions">
-              <a class="button button-primary" href="#contact">BOOK YOUR EXPERIENCE</a>
-              <a class="button button-secondary" href="#experiences">EXPLORE EXPERIENCES</a>
+              <a class="button button-primary" href="./contact.html">BOOK YOUR EXPERIENCE</a>
+              <a class="button button-secondary" href="./experiences.html">EXPLORE EXPERIENCES</a>
             </div>
           </div>
 
@@ -99,10 +100,10 @@
         <section class="events-marketplace" id="upcoming-events" aria-labelledby="events-heading">
           <div class="events-header">
             <div>
-              <p class="kicker">Upcoming events &amp; trips</p>
-              <h2 id="events-heading">Find your next memorable escape.</h2>
+              <p class="kicker">Upcoming events &amp; experiences</p>
+              <h2 id="events-heading">Find Your Next Adventure</h2>
             </div>
-            <div class="event-filters" aria-label="Event categories" role="tablist">
+            <div class="event-filters" aria-label="Event categories">
               <button class="filter-chip is-active" type="button" data-filter="All" aria-pressed="true">All</button>
               <button class="filter-chip" type="button" data-filter="Adventure" aria-pressed="false">Adventure</button>
               <button class="filter-chip" type="button" data-filter="Trips" aria-pressed="false">Trips</button>
@@ -121,35 +122,35 @@
           </div>
 
           <div class="discovery-grid">
-            <a class="discover-card" href="#contact">
+            <a class="discover-card" href="./contact.html">
               <div class="discover-image discover-one"></div>
               <div class="discover-copy">
                 <span>Forest Weekends</span>
-                <p>Owner-approved placeholder category for review.</p>
+                <p>Slow mornings, campfire evenings and nature-led downtime that help people reset properly.</p>
               </div>
             </a>
 
-            <a class="discover-card" href="#contact">
+            <a class="discover-card" href="./contact.html">
               <div class="discover-image discover-two"></div>
               <div class="discover-copy">
                 <span>Adventure Gatherings</span>
-                <p>Placeholder for future outdoor event experiences.</p>
+                <p>Team-based challenges, open-air energy and shared moments built for guests who want movement.</p>
               </div>
             </a>
 
-            <a class="discover-card" href="#contact">
+            <a class="discover-card" href="./contact.html">
               <div class="discover-image discover-three"></div>
               <div class="discover-copy">
                 <span>Private Retreats</span>
-                <p>Edit this category before publishing if needed.</p>
+                <p>Tailored escapes for couples, friends, families and teams seeking a more personal experience.</p>
               </div>
             </a>
 
-            <a class="discover-card" href="#contact">
+            <a class="discover-card" href="./contact.html">
               <div class="discover-image discover-four"></div>
               <div class="discover-copy">
                 <span>Day Escapes</span>
-                <p>Editorial placeholder to confirm with the owner.</p>
+                <p>Short-format outings for people who want a reset without the full travel commitment.</p>
               </div>
             </a>
           </div>
@@ -189,18 +190,27 @@
           </div>
         </section>
 
-        <section class="philosophy panel-ivory" id="what-we-do">
-          <div class="intro-text">
-            <p class="kicker">What We Do</p>
-            <h2>We design moments that pull people out of routine and back into themselves.</h2>
+        <section class="about-otg" id="what-we-do">
+          <div class="about-copy">
+            <p class="kicker">About OTG</p>
+            <h2>We create outdoor experiences that help people step away, slow down and feel present.</h2>
             <p>
-              OTG creates immersive experiences for people who want more than a night out. We bring together nature,
-              thoughtful hospitality and well-paced adventure so guests can reconnect, recharge and feel genuinely alive.
+              Off The Grid Events curates immersive adventures shaped around nature, connection and intentional downtime.
+              Our focus is simple: create a sense of calm, energy and belonging without overcomplicating the experience.
+            </p>
+            <p>
+              Every enquiry is reviewed individually so the trip, stay or activity matches the group, the goal and the pace you actually want.
+              This is an inquiry-first experience: we confirm availability and the right fit before any booking is finalised.
             </p>
           </div>
 
-          <div class="intro-visual">
-            <div class="intro-photo"></div>
+          <div class="about-panel">
+            <h3>How enquiries and bookings work</h3>
+            <ul>
+              <li>Send your request through the form below or contact us once final launch details are approved.</li>
+              <li>We check availability, suitability and practical details before confirming a reservation.</li>
+              <li>No payment or booking is finalised on this website until a verified backend and approved policy is in place.</li>
+            </ul>
           </div>
         </section>
 
@@ -250,11 +260,14 @@
           <div class="inquiry-copy">
             <p class="kicker">Start your inquiry</p>
             <h2>Tell us what kind of escape you’re craving.</h2>
+            <p>
+              Public phone and email details are published only after OTG confirms and approves them. Until then, the safest and clearest way to enquire is through the form below.
+            </p>
           </div>
 
           <div class="inquiry-actions">
-            <a class="button button-primary" href="mailto:hello@otg-events.example">BOOK YOUR EXPERIENCE</a>
-            <a class="button button-secondary" href="mailto:hello@otg-events.example">CONTACT OTG</a>
+            <a class="button button-primary" href="./contact.html">BOOK YOUR EXPERIENCE</a>
+            <a class="button button-secondary" href="./contact.html">CONTACT OTG</a>
           </div>
         </section>
       </main>
@@ -265,10 +278,15 @@
         </div>
         <p>OFF THE GRID. OUT OF YOUR HEAD. INTO THE MOMENT.</p>
         <div class="footer-links">
-          <a href="#home">Home</a>
-          <a href="#experiences">Experiences</a>
-          <a href="#contact">Contact</a>
-          <a href="#contact">Donate</a>
+          <a href="./index.html#home">Home</a>
+          <a href="./about-us.html">About Us</a>
+          <a href="./experiences.html">Experiences</a>
+          <a href="./calendar.html">Calendar</a>
+          <a href="./contact.html">Contact</a>
+          <a href="./privacy.html">Privacy Policy</a>
+          <a href="./terms.html">Terms</a>
+          <a href="./booking-policy.html">Booking Policy</a>
+          <a href="./cancellation-refund.html">Cancellation &amp; Refunds</a>
         </div>
       </footer>
     </div>
@@ -440,9 +458,11 @@
         if (!selectedEvent || !modalBody) return;
 
         const activityList = selectedEvent.activities.map((item) => `<li>${item}</li>`).join("");
-        const phoneLinks = selectedEvent.contactNumbers
-          .map((number) => `<a href="tel:${number}">${number}</a>`)
-          .join(" · ");
+        const phoneLinks = selectedEvent.contactNumbers.length
+          ? selectedEvent.contactNumbers
+              .map((number) => `<a href="tel:${number}">${number}</a>`)
+              .join(" · ")
+          : "Contact details will be published only after OTG confirms and approves them.";
 
         modalBody.innerHTML = `
           <div class="modal-header">
@@ -483,7 +503,7 @@
 
           <div class="booking-form-wrap">
             <div class="booking-alert">
-              This is a request-only flow. The website does not currently have a live booking backend or payment provider configured. Use the form below to send a booking inquiry and confirm availability directly with OTG.
+              This is an inquiry-only flow. No reservation, deposit or payment is created here. Confirm availability directly with OTG before making any commitment.
             </div>
 
             <form id="booking-form" novalidate>
@@ -491,37 +511,61 @@
                 <label>
                   <span>Full name</span>
                   <input type="text" name="fullName" placeholder="Your full name" required />
+                  <span class="field-error" data-error-for="fullName"></span>
                 </label>
                 <label>
-                  <span>Contact number</span>
-                  <input type="tel" name="phone" placeholder="Your phone number" required />
+                  <span>Preferred contact method</span>
+                  <select name="contactMethod" required>
+                    <option value="">Select a method</option>
+                    <option value="Phone">Phone</option>
+                    <option value="Email">Email</option>
+                    <option value="WhatsApp">WhatsApp</option>
+                  </select>
+                  <span class="field-error" data-error-for="contactMethod"></span>
+                </label>
+                <label>
+                  <span>Phone number</span>
+                  <input type="tel" name="phone" placeholder="Your phone number" />
+                  <span class="field-error" data-error-for="phone"></span>
                 </label>
                 <label>
                   <span>Email address</span>
-                  <input type="email" name="email" placeholder="you@example.com" required />
+                  <input type="email" name="email" placeholder="Your email address" />
+                  <span class="field-error" data-error-for="email"></span>
                 </label>
                 <label>
                   <span>Attendees</span>
                   <input type="number" name="attendees" min="1" value="1" required />
+                  <span class="field-error" data-error-for="attendees"></span>
                 </label>
               </div>
 
               <label>
-                <span>Event requirements</span>
-                <textarea name="notes" rows="4" placeholder="Tell us about dietary needs, accessibility, rooming or any other important notes."></textarea>
+                <span>Message</span>
+                <textarea name="notes" rows="4" placeholder="Tell us what you're looking for, any special requirements or questions you have."></textarea>
+                <span class="field-error" data-error-for="notes"></span>
               </label>
+
+              <div class="checkbox-row">
+                <label>
+                  <input type="checkbox" name="privacyConsent" />
+                  <span>I agree to the privacy notice and understand this is an enquiry only, not a confirmed reservation.</span>
+                </label>
+              </div>
+              <span class="field-error" data-error-for="privacyConsent"></span>
 
               <div class="booking-review" id="booking-review">
                 <strong>Review</strong>
                 <p>Customer name: —</p>
+                <p>Contact method: —</p>
                 <p>Contact: —</p>
                 <p>Attendees: 1</p>
                 <p>Event: ${selectedEvent.name}</p>
               </div>
 
               <div class="modal-actions">
-                <button type="submit" class="button button-primary">Send inquiry request</button>
-                <a class="button button-secondary" href="tel:${selectedEvent.contactNumbers[0]}">Call OTG</a>
+                <button type="submit" class="button button-primary">Send enquiry</button>
+                <a class="button button-secondary" href="${selectedEvent.contactNumbers.length ? `tel:${selectedEvent.contactNumbers[0]}` : '#contact'}">${selectedEvent.contactNumbers.length ? 'Call OTG' : 'Use enquiry form'}</a>
               </div>
             </form>
           </div>
@@ -534,50 +578,136 @@
         const reviewBox = document.getElementById("booking-review");
 
         if (bookingForm) {
+          const clearErrors = () => {
+            bookingForm.querySelectorAll(".field-error").forEach((errorEl) => {
+              errorEl.textContent = "";
+            });
+          };
+
+          const setFieldError = (fieldName, message) => {
+            const errorEl = bookingForm.querySelector(`[data-error-for="${fieldName}"]`);
+            if (errorEl) {
+              errorEl.textContent = message;
+            }
+          };
+
+          const validateForm = () => {
+            clearErrors();
+            const formData = new FormData(bookingForm);
+            let isValid = true;
+
+            const fullName = (formData.get("fullName") || "").toString().trim();
+            if (!fullName) {
+              setFieldError("fullName", "Please enter your full name.");
+              isValid = false;
+            }
+
+            const contactMethod = (formData.get("contactMethod") || "").toString().trim();
+            if (!contactMethod) {
+              setFieldError("contactMethod", "Please choose your preferred contact method.");
+              isValid = false;
+            }
+
+            const phone = (formData.get("phone") || "").toString().trim();
+            const email = (formData.get("email") || "").toString().trim();
+            if (!phone && !email) {
+              setFieldError("phone", "Please add either a phone number or an email address.");
+              setFieldError("email", "Please add either a phone number or an email address.");
+              isValid = false;
+            }
+
+            if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+              setFieldError("email", "Please enter a valid email address.");
+              isValid = false;
+            }
+
+            const attendees = Number(formData.get("attendees") || 0);
+            if (!Number.isInteger(attendees) || attendees < 1) {
+              setFieldError("attendees", "Attendees must be at least 1.");
+              isValid = false;
+            }
+
+            if (!bookingForm.querySelector('input[name="privacyConsent"]').checked) {
+              setFieldError("privacyConsent", "Please confirm that you agree to the privacy notice.");
+              isValid = false;
+            }
+
+            return isValid;
+          };
+
           bookingForm.addEventListener("input", () => {
             const formData = new FormData(bookingForm);
             const fullName = formData.get("fullName") || "—";
+            const contactMethod = formData.get("contactMethod") || "—";
             const phone = formData.get("phone") || "—";
             const attendees = formData.get("attendees") || 1;
             const notes = formData.get("notes") || "No additional notes";
 
             reviewBox.innerHTML = `
               <strong>Review</strong>
+              <p>Experience: ${selectedEvent.name}</p>
+              <p>Date: ${selectedEvent.displayDate}</p>
+              <p>Destination: ${selectedEvent.venue}</p>
               <p>Customer name: ${fullName}</p>
+              <p>Contact method: ${contactMethod}</p>
               <p>Contact: ${phone}</p>
               <p>Attendees: ${attendees}</p>
+              <p>Price: ${selectedEvent.price}</p>
               <p>Notes: ${notes}</p>
-              <p>Event: ${selectedEvent.name}</p>
             `;
           });
 
           bookingForm.addEventListener("submit", (event) => {
             event.preventDefault();
-            const formData = new FormData(bookingForm);
-            const fullName = formData.get("fullName");
-            const phone = formData.get("phone");
-            const email = formData.get("email");
-            const attendees = formData.get("attendees") || 1;
-            const notes = formData.get("notes") || "No additional notes";
-
-            if (!fullName || !phone || !email) {
-              reviewBox.innerHTML = `
-                <strong>Review</strong>
-                <p>Please complete the required fields before sending an inquiry.</p>
-              `;
+            if (!validateForm()) {
               return;
             }
+
+            const formData = new FormData(bookingForm);
+            const fullName = (formData.get("fullName") || "").toString().trim();
+            const contactMethod = (formData.get("contactMethod") || "").toString().trim();
+            const phone = (formData.get("phone") || "").toString().trim();
+            const email = (formData.get("email") || "").toString().trim();
+            const attendees = Number(formData.get("attendees") || 1);
+            const notes = (formData.get("notes") || "").toString().trim() || "No additional notes";
+            const inquiryPhone = (window.otgSiteConfig && window.otgSiteConfig.contactNumbers && window.otgSiteConfig.contactNumbers[0]) || selectedEvent.contactNumbers[0] || "";
+            const inquiryEmail = window.otgSiteConfig && window.otgSiteConfig.inquiryEmail ? window.otgSiteConfig.inquiryEmail : "";
+            const message = [
+              `Experience: ${selectedEvent.name}`,
+              `Date: ${selectedEvent.displayDate}`,
+              `Destination: ${selectedEvent.venue}`,
+              `Attendees: ${attendees}`,
+              `Name: ${fullName}`,
+              `Contact method: ${contactMethod}`,
+              `Phone: ${phone || "Not supplied"}`,
+              `Email: ${email || "Not supplied"}`,
+              `Message: ${notes}`
+            ].join("\n");
+
+            const encodedMessage = encodeURIComponent(message);
+            const handoffHref = inquiryEmail
+              ? `mailto:${inquiryEmail}?subject=${encodeURIComponent(`OTG enquiry: ${selectedEvent.name}`)}&body=${encodedMessage}`
+              : inquiryPhone
+                ? `tel:${inquiryPhone}`
+                : "#contact";
+
+            window.__otgHandoff = {
+              type: inquiryEmail ? "email" : "tel",
+              href: handoffHref,
+              message
+            };
 
             const confirmation = document.createElement("div");
             confirmation.className = "booking-success";
             confirmation.innerHTML = `
-              <h3>Inquiry request prepared</h3>
-              <p><strong>Event:</strong> ${selectedEvent.name}</p>
+              <h3>Enquiry ready to send</h3>
+              <p><strong>Experience:</strong> ${selectedEvent.name}</p>
               <p><strong>Name:</strong> ${fullName}</p>
-              <p><strong>Contact:</strong> ${phone} / ${email}</p>
+              <p><strong>Preferred contact:</strong> ${contactMethod}</p>
               <p><strong>Attendees:</strong> ${attendees}</p>
-              <p><strong>Notes:</strong> ${notes}</p>
-              <p>This demo does not yet send to a live booking backend. Your request is only an inquiry. Availability should be confirmed directly with OTG before any payment or final booking is accepted.</p>
+              <p><strong>Price:</strong> ${selectedEvent.price}</p>
+              <p>This is an enquiry awaiting a response from OTG. It is not a confirmed booking, reservation or payment.</p>
+              <p><a href="${handoffHref}">${inquiryEmail || inquiryPhone ? "Continue with OTG" : "Return to enquiry form"}</a></p>
             `;
 
             bookingForm.replaceWith(confirmation);

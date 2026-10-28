@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | OTG</title>
+    <meta name="description" content="Contact Off The Grid Events to begin an enquiry." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      .page-content {
+        max-width: 1180px;
+        margin: 40px auto 0;
+        padding: 0 32px 80px;
+      }
+      .contact-layout {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 28px;
+      }
+      .contact-panel {
+        background: #fffdf9;
+        border: 1px solid rgba(16, 23, 19, 0.08);
+        border-radius: 28px;
+        padding: 32px;
+        box-shadow: 0 15px 28px rgba(16, 23, 19, 0.06);
+      }
+      .field-grid {
+        display: grid;
+        gap: 18px;
+      }
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+      .field label {
+        font-size: 0.72rem;
+        font-weight: 700;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: rgba(23,29,26,0.72);
+      }
+      .field input,
+      .field textarea,
+      .field select {
+        width: 100%;
+        border: 1px solid rgba(16, 23, 19, 0.14);
+        border-radius: 14px;
+        background: #f7f4ee;
+        padding: 14px 16px;
+        font: inherit;
+        color: var(--text);
+      }
+      .field textarea { min-height: 180px; resize: vertical; }
+      @media (max-width: 780px) {
+        .contact-layout { grid-template-columns: 1fr; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="header-inner">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="./index.html#home">Home</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./experiences.html">Experiences</a>
+            <a href="./calendar.html">Calendar</a>
+            <a href="./contact.html">Contact</a>
+          </nav>
+          <a class="button button-ghost header-button" href="./contact.html">Start your inquiry</a>
+        </div>
+        <div class="brand" aria-label="Off The Grid Events logo">
+          <img class="brand-logo" src="logos/otg white.png" alt="Off The Grid Events logo" />
+        </div>
+      </header>
+
+      <main class="page-content">
+        <div class="contact-layout">
+          <section class="contact-panel">
+            <p class="kicker">Contact OTG</p>
+            <h1 style="margin: 0 0 18px; font-family: 'Cormorant Garamond', serif; font-size: clamp(3rem, 5vw, 5rem); line-height: 0.9; letter-spacing: -0.05em; color: #171d1a;">Tell us what kind of escape you’re after.</h1>
+            <p style="margin: 0; color: rgba(23,29,26,0.78); line-height: 1.8;">
+              Public phone and email details are not published until OTG confirms and approves them. Until then, the safest way to enquire is through this form or by reaching out through a verified channel supplied by the business owner.
+            </p>
+          </section>
+
+          <section class="contact-panel" aria-label="Enquiry form">
+            <form class="field-grid">
+              <div class="field">
+                <label for="name">Full name</label>
+                <input id="name" name="name" type="text" placeholder="Your name" />
+              </div>
+              <div class="field">
+                <label for="email">Email address</label>
+                <input id="email" name="email" type="email" placeholder="you@example.com" />
+              </div>
+              <div class="field">
+                <label for="event">Experience of interest</label>
+                <select id="event" name="event">
+                  <option>Survival Camp</option>
+                  <option>Couples Retreat</option>
+                  <option>Private Group Escape</option>
+                  <option>Still deciding</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="message">Tell us a little about your plans</label>
+                <textarea id="message" name="message" placeholder="Share dates, group size, preferred setting, and anything you’d like us to know."></textarea>
+              </div>
+              <button class="button button-primary" type="submit">Send enquiry</button>
+            </form>
+          </section>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>
