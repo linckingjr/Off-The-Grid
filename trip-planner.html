@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Shape a trip enquiry with Off The Grid Events. Plans, dates, accommodation and costs require confirmation before they can be booked." />
+    <title>My Trip Planner | Off The Grid Events</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      :root {
+        --planner-paper: #fbfaf6;
+        --planner-ink: #101713;
+        --planner-muted: #59635d;
+        --planner-line: rgba(16, 23, 19, 0.13);
+        --planner-warning: #755a24;
+        --planner-warning-bg: #f2ead5;
+      }
+
+      .planner-main {
+        width: min(1180px, calc(100% - 48px));
+        margin: 34px auto 80px;
+      }
+
+      .planner-intro {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(220px, 0.48fr);
+        align-items: end;
+        gap: 28px;
+        padding: 18px 0 24px;
+        border-bottom: 1px solid var(--planner-line);
+      }
+
+      .planner-intro h1 {
+        max-width: 700px;
+        margin: 0;
+        color: var(--planner-ink);
+        font: 600 clamp(2.8rem, 5vw, 4.8rem)/0.92 "Cormorant Garamond", serif;
+      }
+
+      .planner-intro p:last-child {
+        margin: 0;
+        color: var(--planner-muted);
+        line-height: 1.7;
+        font-size: 0.94rem;
+      }
+
+      .planner-disclosure {
+        margin: 20px 0 24px;
+        padding: 14px 17px;
+        border-left: 3px solid var(--brass);
+        background: rgba(183, 161, 106, 0.11);
+        color: #3a403c;
+        font-size: 0.88rem;
+        line-height: 1.65;
+      }
+
+      .planner-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 320px;
+        align-items: start;
+        gap: 28px;
+      }
+
+      .planner-workspace,
+      .planner-summary {
+        min-width: 0;
+        background: var(--planner-paper);
+        border: 1px solid var(--planner-line);
+      }
+
+      .planner-workspace {
+        padding: clamp(18px, 3vw, 32px);
+      }
+
+      .planner-summary {
+        position: sticky;
+        top: 20px;
+        padding: 22px;
+      }
+
+      .step-progress {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: 8px;
+        margin-bottom: 30px;
+      }
+
+      .step-progress button {
+        display: grid;
+        gap: 8px;
+        justify-items: start;
+        padding: 0 0 10px;
+        color: #68716b;
+        border: 0;
+        border-bottom: 2px solid var(--planner-line);
+        background: transparent;
+        text-align: left;
+        cursor: pointer;
+      }
+
+      .step-progress button[aria-current="step"] {
+        color: var(--forest-primary);
+        border-color: var(--brass);
+      }
+
+      .step-number {
+        display: grid;
+        place-items: center;
+        width: 28px;
+        height: 28px;
+        border: 1px solid currentColor;
+        border-radius: 50%;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .step-label {
+        font-size: 0.65rem;
+        line-height: 1.25;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+      }
+
+      .planner-step[hidden] { display: none; }
+
+      .step-heading {
+        margin-bottom: 22px;
+      }
+
+      .step-heading .kicker { margin-bottom: 8px; }
+
+      .step-heading h2 {
+        margin: 0 0 8px;
+        color: var(--planner-ink);
+        font: 600 2.45rem/0.98 "Cormorant Garamond", serif;
+      }
+
+      .step-heading p {
+        max-width: 680px;
+        margin: 0;
+        color: var(--planner-muted);
+        font-size: 0.9rem;
+        line-height: 1.65;
+      }
+
+      .field-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+      }
+
+      .field {
+        display: grid;
+        align-content: start;
+        gap: 7px;
+        min-width: 0;
+      }
+
+      .field.full { grid-column: 1 / -1; }
+
+      .field label,
+      .field-label {
+        color: #37433c;
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .field input,
+      .field select,
+      .field textarea {
+        width: 100%;
+        min-height: 46px;
+        padding: 11px 12px;
+        border: 1px solid var(--planner-line);
+        border-radius: 4px;
+        background: #fff;
+        color: var(--planner-ink);
+        font: inherit;
+        font-size: 0.92rem;
+      }
+
+      .field textarea { min-height: 104px; resize: vertical; }
+      .field input:focus,
+      .field select:focus,
+      .field textarea:focus { outline: 2px solid var(--brass); outline-offset: 2px; }
+      .field [aria-invalid="true"] { border-color: #9c3d35; }
+
+      .field-help {
+        color: var(--planner-muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .field-error {
+        display: none;
+        color: #8a302b;
+        font-size: 0.78rem;
+        line-height: 1.45;
+      }
+
+      .field-error.is-visible { display: block; }
+
+      .check-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        min-height: 44px;
+        color: #37433c;
+        font-size: 0.88rem;
+        line-height: 1.5;
+      }
+
+      .check-row input { width: 18px; height: 18px; flex: 0 0 auto; margin: 2px 0 0; accent-color: var(--forest-primary); }
+
+      .choice-note,
+      .empty-config,
+      .inline-alert {
+        padding: 13px 15px;
+        border: 1px solid var(--planner-line);
+        color: var(--planner-muted);
+        background: rgba(243, 240, 232, 0.62);
+        font-size: 0.84rem;
+        line-height: 1.6;
+      }
+
+      .choice-note { margin: 16px 0 0; }
+      .empty-config { margin-top: 12px; }
+      .inline-alert { margin-top: 15px; border-left: 3px solid var(--brass); }
+
+      .lodging-detail {
+        display: none;
+        margin-top: 14px;
+        padding: 16px;
+        border: 1px solid var(--planner-line);
+        background: #fff;
+      }
+
+      .lodging-detail.is-visible { display: block; }
+      .lodging-detail h3 { margin: 0 0 8px; font-size: 1rem; }
+      .lodging-detail p { margin: 4px 0; color: var(--planner-muted); font-size: 0.84rem; line-height: 1.5; }
+
+      .itinerary-list {
+        display: grid;
+        gap: 10px;
+        margin-top: 14px;
+      }
+
+      .itinerary-day {
+        display: grid;
+        grid-template-columns: minmax(90px, 0.35fr) minmax(150px, 0.65fr) minmax(180px, 1fr);
+        gap: 10px;
+        align-items: center;
+        padding: 12px;
+        border: 1px solid var(--planner-line);
+        background: #fff;
+      }
+
+      .itinerary-day strong { font-size: 0.8rem; }
+      .itinerary-day select,
+      .itinerary-day input {
+        width: 100%;
+        min-width: 0;
+        min-height: 40px;
+        padding: 8px;
+        border: 1px solid var(--planner-line);
+        border-radius: 3px;
+        background: white;
+        font: inherit;
+        font-size: 0.82rem;
+      }
+
+      .activity-preference { margin-top: 18px; }
+
+      .transport-followup[hidden] { display: none; }
+
+      .cost-list,
+      .summary-list {
+        display: grid;
+        gap: 0;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+
+      .cost-row,
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(16, 23, 19, 0.09);
+        color: var(--planner-muted);
+        font-size: 0.83rem;
+        line-height: 1.45;
+      }
+
+      .cost-row strong,
+      .summary-row strong { color: var(--planner-ink); text-align: right; }
+
+      .summary-heading {
+        margin: 0 0 6px;
+        color: var(--planner-ink);
+        font: 600 2rem/1 "Cormorant Garamond", serif;
+      }
+
+      .summary-status {
+        margin: 0 0 14px;
+        color: var(--planner-muted);
+        font-size: 0.78rem;
+        line-height: 1.5;
+      }
+
+      .summary-section-title {
+        margin: 18px 0 5px;
+        color: var(--forest-primary);
+        font-size: 0.68rem;
+        font-weight: 800;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .summary-total {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 14px 0 8px;
+        color: var(--planner-ink);
+        font-size: 0.94rem;
+        font-weight: 800;
+      }
+
+      .summary-small {
+        margin: 0;
+        color: var(--planner-muted);
+        font-size: 0.74rem;
+        line-height: 1.55;
+      }
+
+      .budget-meter {
+        margin-top: 16px;
+        padding: 13px;
+        background: var(--planner-warning-bg);
+        color: var(--planner-warning);
+        font-size: 0.8rem;
+        line-height: 1.55;
+      }
+
+      .adjustment-list { margin: 10px 0 0; padding-left: 18px; }
+      .adjustment-list li + li { margin-top: 6px; }
+
+      .review-block {
+        margin-top: 14px;
+        padding: 16px;
+        border: 1px solid var(--planner-line);
+        background: white;
+      }
+
+      .review-block h3 {
+        margin: 0 0 10px;
+        color: var(--forest-primary);
+        font-size: 0.69rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+      }
+
+      .review-block p,
+      .review-block li {
+        color: #3d4841;
+        font-size: 0.85rem;
+        line-height: 1.6;
+      }
+
+      .review-block p { margin: 5px 0; }
+      .review-block ul { margin: 6px 0 0; padding-left: 19px; }
+
+      .step-actions {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        margin-top: 28px;
+        padding-top: 18px;
+        border-top: 1px solid var(--planner-line);
+      }
+
+      .step-actions button {
+        min-height: 46px;
+        padding: 0 18px;
+        border: 1px solid var(--forest-primary);
+        border-radius: 3px;
+        color: var(--forest-primary);
+        background: transparent;
+        font-size: 0.7rem;
+        font-weight: 800;
+        letter-spacing: 0.09em;
+        text-transform: uppercase;
+        cursor: pointer;
+      }
+
+      .step-actions button.primary {
+        margin-left: auto;
+        border-color: var(--forest-primary);
+        color: white;
+        background: var(--forest-primary);
+      }
+
+      .step-actions button[hidden] { display: none; }
+      .step-actions button:disabled { opacity: 0.55; cursor: not-allowed; }
+      .step-actions button:focus-visible,
+      .step-progress button:focus-visible { outline: 2px solid var(--brass); outline-offset: 3px; }
+
+      .send-status {
+        display: none;
+        margin-top: 18px;
+        padding: 15px;
+        border-left: 3px solid var(--brass);
+        background: var(--planner-warning-bg);
+        color: #4a3c20;
+        font-size: 0.87rem;
+        line-height: 1.6;
+      }
+
+      .send-status.is-visible { display: block; }
+
+      .copy-button {
+        min-height: 40px;
+        margin-top: 12px;
+        padding: 0 14px;
+        border: 1px solid var(--forest-primary);
+        border-radius: 3px;
+        color: var(--forest-primary);
+        background: transparent;
+        font-weight: 700;
+        cursor: pointer;
+      }
+
+      .privacy-note {
+        margin-top: 15px;
+        color: var(--planner-muted);
+        font-size: 0.75rem;
+        line-height: 1.6;
+      }
+
+      @media (max-width: 980px) {
+        .planner-layout { grid-template-columns: 1fr; }
+        .planner-summary { position: static; order: -1; }
+      }
+
+      @media (max-width: 680px) {
+        .planner-main { width: min(100% - 28px, 560px); margin-top: 18px; }
+        .planner-intro { grid-template-columns: 1fr; gap: 14px; }
+        .planner-intro h1 { font-size: 3.25rem; }
+        .planner-summary { padding: 18px; }
+        .step-progress { gap: 5px; }
+        .step-progress button { gap: 6px; }
+        .step-label { font-size: 0.56rem; letter-spacing: 0.03em; }
+        .step-number { width: 25px; height: 25px; }
+        .field-grid { grid-template-columns: 1fr; }
+        .field.full { grid-column: auto; }
+        .itinerary-day { grid-template-columns: 1fr 1fr; }
+        .itinerary-day input { grid-column: 1 / -1; }
+        .step-actions { position: sticky; bottom: 0; z-index: 4; background: var(--planner-paper); }
+        .step-actions button { padding: 0 12px; font-size: 0.62rem; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="header-inner">
+          <nav class="site-nav" aria-label="Main navigation">
+            <a href="./index.html#home">Home</a>
+            <a href="./about-us.html">About Us</a>
+            <a href="./experiences.html">Experiences</a>
+            <a href="./trip-planner.html" aria-current="page">My Trip Planner</a>
+            <a href="./store.html">Store</a>
+            <a href="./calendar.html">Calendar</a>
+            <a href="./contact.html">Contact</a>
+          </nav>
+          <a class="button button-ghost header-button" href="./contact.html">Contact OTG</a>
+        </div>
+        <div class="brand" aria-label="Off The Grid Events logo">
+          <img class="brand-logo" src="logos/otg white.png" alt="Off The Grid Events logo" />
+        </div>
+      </header>
+
+      <main class="planner-main">
+        <header class="planner-intro">
+          <div>
+            <p class="kicker">A considered start</p>
+            <h1>My Trip Planner</h1>
+          </div>
+          <p>Set out the trip you have in mind. We’ll keep unconfirmed details visible, so you can see what still needs OTG’s review.</p>
+        </header>
+
+        <p class="planner-disclosure"><strong>Enquiry only:</strong> dates, destinations, accommodation, transport, activities, prices and availability are not confirmed or reserved by this planner. No approved trip rates are currently configured.</p>
+
+        <div class="planner-layout">
+          <section class="planner-workspace" aria-label="Trip planning steps">
+            <nav class="step-progress" aria-label="Planner progress">
+              <button type="button" data-go-step="0" aria-current="step"><span class="step-number">1</span><span class="step-label">Your party</span></button>
+              <button type="button" data-go-step="1"><span class="step-number">2</span><span class="step-label">Where to</span></button>
+              <button type="button" data-go-step="2"><span class="step-number">3</span><span class="step-label">Trip plan</span></button>
+              <button type="button" data-go-step="3"><span class="step-number">4</span><span class="step-label">Getting there</span></button>
+              <button type="button" data-go-step="4"><span class="step-number">5</span><span class="step-label">Review</span></button>
+            </nav>
+
+            <form id="planner-form" novalidate>
+              <section class="planner-step" data-step="0" aria-labelledby="step-party-title">
+                <div class="step-heading">
+                  <p class="kicker">Step 1 of 5</p>
+                  <h2 id="step-party-title" tabindex="-1">Who’s travelling?</h2>
+                  <p>Share just the details OTG needs to understand and review your enquiry.</p>
+                </div>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="traveller-name">Full name *</label>
+                    <input id="traveller-name" name="name" autocomplete="name" required minlength="2" aria-describedby="name-error" />
+                    <span class="field-error" id="name-error">Enter your name so OTG can identify the enquiry.</span>
+                  </div>
+                  <div class="field">
+                    <label for="traveller-email">Email address *</label>
+                    <input id="traveller-email" name="email" type="email" autocomplete="email" required aria-describedby="email-error" />
+                    <span class="field-error" id="email-error">Enter a valid email address.</span>
+                  </div>
+                  <div class="field">
+                    <label for="traveller-phone">Phone number</label>
+                    <input id="traveller-phone" name="phone" type="tel" autocomplete="tel" />
+                    <span class="field-help">Optional. Include a country code if a call or message is appropriate.</span>
+                  </div>
+                  <div class="field">
+                    <label for="traveller-count">Number of travellers *</label>
+                    <input id="traveller-count" name="travellers" type="number" min="1" max="99" value="2" required aria-describedby="travellers-error" />
+                    <span class="field-error" id="travellers-error">Enter a number from 1 to 99.</span>
+                  </div>
+                  <div class="field full">
+                    <label for="special-requirements">Special requirements or accessibility notes</label>
+                    <textarea id="special-requirements" name="requirements" maxlength="1200" placeholder="Share only details needed to plan access, comfort, or safety."></textarea>
+                    <span class="field-help">Please avoid sensitive medical details. OTG will review these notes manually if a secure enquiry channel is configured.</span>
+                  </div>
+                </div>
+              </section>
+
+              <section class="planner-step" data-step="1" aria-labelledby="step-place-title" hidden>
+                <div class="step-heading">
+                  <p class="kicker">Step 2 of 5</p>
+                  <h2 id="step-place-title" tabindex="-1">Where would you like to go?</h2>
+                  <p>Only destinations already named in OTG’s project data are listed. They remain draft concepts and require confirmation.</p>
+                </div>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="region-select">Region *</label>
+                    <select id="region-select" required aria-describedby="region-help">
+                      <option value="">Choose a region</option>
+                    </select>
+                    <span class="field-help" id="region-help">Region mapping has not been approved by OTG.</span>
+                  </div>
+                  <div class="field">
+                    <label for="destination-select">Destination *</label>
+                    <select id="destination-select" required disabled aria-describedby="destination-help">
+                      <option value="">Choose a region first</option>
+                    </select>
+                    <span class="field-help" id="destination-help">Every listed destination is an unconfirmed draft lead.</span>
+                  </div>
+                  <div class="field full">
+                    <label for="accommodation-select">Accommodation</label>
+                    <select id="accommodation-select">
+                      <option value="none">No accommodation required</option>
+                      <option value="help">Help me choose · pending OTG review</option>
+                    </select>
+                    <span class="field-help">No verified lodge, capacity, facilities, location details, or approved accommodation prices are configured yet.</span>
+                  </div>
+                </div>
+                <div id="destination-detail" class="lodging-detail" aria-live="polite"></div>
+                <p class="choice-note">Selecting a draft destination records interest only. It does not confirm that OTG serves the location or that an event or stay is available.</p>
+              </section>
+
+              <section class="planner-step" data-step="2" aria-labelledby="step-plan-title" hidden>
+                <div class="step-heading">
+                  <p class="kicker">Step 3 of 5</p>
+                  <h2 id="step-plan-title" tabindex="-1">Set the pace</h2>
+                  <p>Choose your preferred date window and sketch a loose rhythm. You can revise each day later.</p>
+                </div>
+                <div class="field-grid">
+                  <div class="field">
+                    <label for="arrival-date">Preferred arrival date *</label>
+                    <input id="arrival-date" name="arrival" type="date" required aria-describedby="date-error" />
+                  </div>
+                  <div class="field">
+                    <label for="departure-date">Preferred departure date *</label>
+                    <input id="departure-date" name="departure" type="date" required aria-describedby="date-error" />
+                  </div>
+                  <div class="field">
+                    <label for="trip-nights">Number of nights *</label>
+                    <input id="trip-nights" name="nights" type="number" min="0" max="90" value="1" required aria-describedby="date-error" />
+                    <span class="field-help">Dates update nights automatically; changing nights updates the departure date.</span>
+                  </div>
+                  <div class="field">
+                    <span class="field-label">Date flexibility</span>
+                    <label class="check-row" for="flexible-dates"><input id="flexible-dates" name="flexible" type="checkbox" /> My dates are flexible</label>
+                  </div>
+                  <div class="field full">
+                    <span id="date-error" class="field-error" role="alert">Choose valid dates. Departure cannot be earlier than arrival.</span>
+                  </div>
+                  <div class="field full">
+                    <span class="field-label">Activities to request</span>
+                    <div id="activity-options" class="empty-config">No verified activities are configured. OTG has not approved any activities, durations, requirements, availability, or rates for this planner.</div>
+                  </div>
+                  <div class="field full">
+                    <label for="activity-preference">Activities or experiences you’d like OTG to explore</label>
+                    <textarea id="activity-preference" maxlength="1000" placeholder="There are no approved activities configured yet. Describe an idea for OTG to review."></textarea>
+                    <span class="field-help">This is a preference, not a confirmed offering. Activity rates, duration, age/safety requirements and availability are not configured.</span>
+                  </div>
+                </div>
+                <div class="field" style="margin-top: 20px;">
+                  <span class="field-label">Optional day-by-day outline</span>
+                  <span class="field-help">Mark rest and free-time days, or add notes for each day. This is a planning preference only.</span>
+                </div>
+                <div id="itinerary-list" class="itinerary-list"></div>
+              </section>
+
+              <section class="planner-step" data-step="3" aria-labelledby="step-transport-title" hidden>
+                <div class="step-heading">
+                  <p class="kicker">Step 4 of 5</p>
+                  <h2 id="step-transport-title" tabindex="-1">Getting there, and budget</h2>
+                  <p>Transport choices distinguish self-arranged travel from a request for OTG support. No transport rate or tax rule is currently approved.</p>
+                </div>
+                <div class="field-grid">
+                  <div class="field full">
+                    <label for="transport-select">Transport preference</label>
+                    <select id="transport-select"></select>
+                  </div>
+                  <div class="field full transport-followup" id="pickup-field" hidden>
+                    <label for="pickup-location">Pickup location or transport notes *</label>
+                    <input id="pickup-location" maxlength="300" placeholder="Town, landmark, or route details" aria-describedby="pickup-error" />
+                    <span class="field-error" id="pickup-error">Add a pickup location or route preference.</span>
+                  </div>
+                  <div class="field">
+                    <label for="budget-target">Target budget</label>
+                    <input id="budget-target" type="number" min="0" step="0.01" inputmode="decimal" placeholder="Optional" />
+                    <span class="field-help">Currency: USD, following the existing OTG event data convention. A target is not a quote.</span>
+                  </div>
+                  <div class="field">
+                    <span class="field-label">Additional gear</span>
+                    <label class="check-row" for="gear-request"><input id="gear-request" type="checkbox" /> Ask OTG to review gear or equipment</label>
+                    <span class="field-help">The existing store catalogue has no approved prices or availability.</span>
+                  </div>
+                </div>
+                <div class="inline-alert">All current trip rates are pending approval. This planner will not infer prices, taxes, fees, availability, or transport calculation rules.</div>
+                <div class="review-block" aria-live="polite">
+                  <h3>Current cost review</h3>
+                  <div id="cost-breakdown"></div>
+                  <div id="budget-review" class="budget-meter">Add a budget target to compare it once approved rates are available.</div>
+                  <div id="adjustment-review" class="summary-small"></div>
+                </div>
+              </section>
+
+              <section class="planner-step" data-step="4" aria-labelledby="step-review-title" hidden>
+                <div class="step-heading">
+                  <p class="kicker">Step 5 of 5</p>
+                  <h2 id="step-review-title" tabindex="-1">Review your trip enquiry</h2>
+                  <p>Check your selections and outstanding details. You can return to any step without losing entries in this browser session.</p>
+                </div>
+                <div id="final-review"></div>
+                <p class="privacy-note">Your details are held only in this page’s current browser memory. This site does not save them to local storage, send them to a server, or reserve anything. Avoid including sensitive personal or medical information.</p>
+                <div id="send-status" class="send-status" role="status" aria-live="polite" aria-atomic="true"></div>
+                <button id="copy-summary" class="copy-button" type="button" hidden>Copy enquiry summary</button>
+              </section>
+
+              <div id="planner-status" class="field-error" role="alert" aria-live="polite"></div>
+              <div class="step-actions">
+                <button id="previous-step" type="button" hidden>Back</button>
+                <button id="next-step" class="primary" type="button">Continue</button>
+                <button id="send-enquiry" class="primary" type="button" hidden>Send Trip Enquiry</button>
+              </div>
+            </form>
+          </section>
+
+          <aside class="planner-summary" aria-labelledby="summary-title">
+            <h2 id="summary-title" class="summary-heading">Trip at a glance</h2>
+            <p class="summary-status" id="summary-status">Planning in progress · nothing is booked or reserved.</p>
+            <div id="live-summary"></div>
+            <p class="summary-section-title">Cost overview</p>
+            <ul id="live-costs" class="cost-list"></ul>
+            <div class="summary-total"><span>Estimated total</span><strong id="live-total">Pending</strong></div>
+            <p class="summary-small" id="live-cost-note">No approved rates are configured. Confirmed amount: USD 0.00. Final cost remains pending.</p>
+            <div id="live-budget" class="budget-meter">Budget comparison awaits a target and approved prices.</div>
+          </aside>
+        </div>
+      </main>
+
+      <footer class="site-footer">
+        <div class="site-footer-inner">
+          <div><h4>OTG</h4><p><a href="./about-us.html">About us</a></p><p><a href="./experiences.html">Experiences</a></p><p><a href="./trip-planner.html">My Trip Planner</a></p></div>
+          <div><h4>Planning</h4><p><a href="./calendar.html">Calendar</a></p><p><a href="./booking-policy.html">Booking policy</a></p><p><a href="./cancellation-refund.html">Cancellations</a></p></div>
+          <div><h4>Visit</h4><p><a href="./contact.html">Contact</a></p><p><a href="./privacy.html">Privacy</a></p><p><a href="./terms.html">Terms</a></p></div>
+          <div><h4>Planning status</h4><p>No live booking or enquiry delivery is connected. All dates, details and costs require OTG review.</p><small>Off The Grid Events</small></div>
+        </div>
+      </footer>
+    </div>
+
+    <script src="trip-planner-data.js"></script>
+    <script>
+      (function () {
+        const data = window.otgTripPlannerData;
+        const calculator = window.otgTripPlannerCalculator;
+        const form = document.getElementById("planner-form");
+        const steps = Array.from(document.querySelectorAll(".planner-step"));
+        const progressButtons = Array.from(document.querySelectorAll("[data-go-step]"));
+        const regionSelect = document.getElementById("region-select");
+        const destinationSelect = document.getElementById("destination-select");
+        const accommodationSelect = document.getElementById("accommodation-select");
+        const transportSelect = document.getElementById("transport-select");
+        const arrivalInput = document.getElementById("arrival-date");
+        const departureInput = document.getElementById("departure-date");
+        const nightsInput = document.getElementById("trip-nights");
+        const itineraryList = document.getElementById("itinerary-list");
+        const pickupField = document.getElementById("pickup-field");
+        const pickupInput = document.getElementById("pickup-location");
+        const plannerStatus = document.getElementById("planner-status");
+        let currentStep = 0;
+        let itinerarySignature = "";
+        let finalSummaryText = "";
+
+        function formatMoney(amount) {
+          return new Intl.NumberFormat("en-US", { style: "currency", currency: data.currency }).format(amount);
+        }
+
+        function escapeHtml(value) {
+          return String(value || "").replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#39;" }[character]));
+        }
+
+        function getSelectedRegion() {
+          return data.regions.find((region) => region.id === regionSelect.value) || null;
+        }
+
+        function getSelectedDestination() {
+          const region = getSelectedRegion();
+          return region ? region.destinations.find((destination) => destination.id === destinationSelect.value) || null : null;
+        }
+
+        function getSelectedAccommodation() {
+          return data.accommodations.find((item) => item.id === accommodationSelect.value) || null;
+        }
+
+        function getSelectedTransport() {
+          return data.transportOptions.find((item) => item.id === transportSelect.value) || null;
+        }
+
+        function selectedLineItems() {
+          const items = [];
+          const destination = getSelectedDestination();
+          const accommodation = getSelectedAccommodation();
+          const transport = getSelectedTransport();
+          if (destination) items.push({ name: `Destination review: ${destination.name}`, rate: destination.rate });
+          if (accommodation) items.push({ name: `Accommodation: ${accommodation.name}`, rate: accommodation.rate });
+          if (accommodationSelect.value === "help") items.push({ name: "Accommodation selection assistance", rate: { approved: false } });
+          document.querySelectorAll("[data-activity-id]:checked").forEach((checkbox) => {
+            const activity = data.activities.find((item) => item.id === checkbox.value);
+            if (activity) items.push({ name: `Activity: ${activity.name}`, rate: activity.rate });
+          });
+          const activity = document.getElementById("activity-preference").value.trim();
+          if (activity) items.push({ name: "Requested activity preference", rate: { approved: false } });
+          if (transport && transport.rate) items.push({ name: `Transport request: ${transport.name}`, rate: transport.rate });
+          if (document.getElementById("gear-request").checked) items.push({ name: "Equipment review request", rate: { approved: false } });
+          return items;
+        }
+
+        function getContext() {
+          const travellers = Number(document.getElementById("traveller-count").value);
+          const nights = Number(nightsInput.value);
+          return {
+            travellers: Number.isFinite(travellers) ? travellers : undefined,
+            nights: Number.isFinite(nights) ? nights : undefined,
+            vehicles: undefined,
+            trips: 1,
+            distanceKm: undefined
+          };
+        }
+
+        function getCostSummary() {
+          const lines = selectedLineItems();
+          const summary = calculator.summarizeLines(lines, getContext());
+          const transport = getSelectedTransport();
+          return { ...summary, transportExcluded: Boolean(transport && transport.id === "own-vehicle") };
+        }
+
+        function updateRegionOptions() {
+          const previousRegion = regionSelect.value;
+          regionSelect.innerHTML = '<option value="">Choose a region</option>' + data.regions.map((region) => `<option value="${escapeHtml(region.id)}">${escapeHtml(region.name)}</option>`).join("");
+          regionSelect.value = previousRegion;
+          updateDestinationOptions(true);
+        }
+
+        function updateDestinationOptions(preserveSelection) {
+          const region = getSelectedRegion();
+          const previousDestination = preserveSelection ? destinationSelect.value : "";
+          destinationSelect.disabled = !region;
+          destinationSelect.innerHTML = region
+            ? '<option value="">Choose a destination</option>' + region.destinations.map((destination) => `<option value="${escapeHtml(destination.id)}">${escapeHtml(destination.name)} · ${escapeHtml(destination.status)}</option>`).join("")
+            : '<option value="">Choose a region first</option>';
+          if (region && preserveSelection && region.destinations.some((destination) => destination.id === previousDestination)) {
+            destinationSelect.value = previousDestination;
+          }
+          if (!region || destinationSelect.value !== previousDestination) destinationSelect.value = "";
+          updateDestinationDetail();
+          updateAll();
+        }
+
+        function updateDestinationDetail() {
+          const destination = getSelectedDestination();
+          const detail = document.getElementById("destination-detail");
+          if (!destination) {
+            detail.classList.remove("is-visible");
+            detail.innerHTML = "";
+            return;
+          }
+          detail.innerHTML = `<h3>${escapeHtml(destination.name)}</h3><p>${escapeHtml(destination.status)}</p><p>${escapeHtml(destination.description)}</p><p>Rate: pending approval · availability: unconfirmed</p>`;
+          detail.classList.add("is-visible");
+        }
+
+        function updateAccommodationOptions() {
+          const destination = getSelectedDestination();
+          const matchingOptions = destination
+            ? data.accommodations.filter((item) => item.destinationId === destination.id)
+            : [];
+          const selection = accommodationSelect.value;
+          accommodationSelect.innerHTML = '<option value="none">No accommodation required</option><option value="help">Help me choose · pending OTG review</option>' + data.accommodations.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)} · ${escapeHtml(item.status || "Details pending")}</option>`).join("");
+          Array.from(accommodationSelect.options).forEach((option) => {
+            if (option.value && option.value !== "none" && option.value !== "help" && !matchingOptions.some((item) => item.id === option.value)) option.remove();
+          });
+          accommodationSelect.value = matchingOptions.some((item) => item.id === selection) || selection === "help" ? selection : "none";
+        }
+
+        function updateActivityOptions() {
+          const destination = getSelectedDestination();
+          const selectedIds = new Set(Array.from(document.querySelectorAll("[data-activity-id]:checked"), (checkbox) => checkbox.value));
+          const options = destination
+            ? data.activities.filter((item) => Array.isArray(item.destinationIds) && item.destinationIds.includes(destination.id))
+            : [];
+          const container = document.getElementById("activity-options");
+          if (!options.length) {
+            container.className = "empty-config";
+            container.textContent = "No verified activities are configured for this destination. Describe an idea below for OTG to review; it is not a confirmed offering.";
+            return;
+          }
+          container.className = "field-grid";
+          container.innerHTML = options.map((activity) => {
+            const rate = activity.rate && activity.rate.approved && Number.isFinite(activity.rate.amount)
+              ? `${formatMoney(activity.rate.amount)} · ${escapeHtml(activity.rate.basis || "pricing basis pending")}`
+              : "Cost pending approval";
+            const status = activity.status || (activity.approved ? "Availability unconfirmed" : "Draft · confirmation required");
+            return `<label class="check-row"><input type="checkbox" data-activity-id="${escapeHtml(activity.id)}" value="${escapeHtml(activity.id)}" ${selectedIds.has(activity.id) ? "checked" : ""} /><span><strong>${escapeHtml(activity.name)}</strong><br />${escapeHtml(activity.description || "Details pending") }<br /><small>Duration: ${escapeHtml(activity.duration || "Not confirmed")} · Requirements: ${escapeHtml(activity.requirements || "Not confirmed")} · ${escapeHtml(rate)} · ${escapeHtml(status)}</small></span></label>`;
+          }).join("");
+        }
+
+        function updateTransportOptions() {
+          transportSelect.innerHTML = data.transportOptions.map((item) => `<option value="${escapeHtml(item.id)}">${escapeHtml(item.name)}</option>`).join("");
+          updateTransportFollowup();
+        }
+
+        function updateTransportFollowup() {
+          const requiresPickup = transportSelect.value === "ask-otg-transport";
+          pickupField.hidden = !requiresPickup;
+          pickupInput.required = requiresPickup;
+          if (!requiresPickup) {
+            pickupInput.removeAttribute("aria-invalid");
+            document.getElementById("pickup-error").classList.remove("is-visible");
+          }
+        }
+
+        function parseDate(value) {
+          if (!value) return null;
+          const date = new Date(`${value}T00:00:00`);
+          return Number.isNaN(date.getTime()) ? null : date;
+        }
+
+        function dayDifference(start, end) {
+          return Math.round((end.getTime() - start.getTime()) / 86400000);
+        }
+
+        function toDateInputValue(date) {
+          const year = date.getFullYear();
+          const month = String(date.getMonth() + 1).padStart(2, "0");
+          const day = String(date.getDate()).padStart(2, "0");
+          return `${year}-${month}-${day}`;
+        }
+
+        function updateDatesFromNights() {
+          const arrival = parseDate(arrivalInput.value);
+          const nights = Number(nightsInput.value);
+          if (arrival && Number.isInteger(nights) && nights >= 0) {
+            const departure = new Date(arrival);
+            departure.setDate(departure.getDate() + nights);
+            departureInput.value = toDateInputValue(departure);
+          }
+          validateDates(false);
+          renderItinerary();
+          updateAll();
+        }
+
+        function updateNightsFromDates() {
+          const arrival = parseDate(arrivalInput.value);
+          const departure = parseDate(departureInput.value);
+          if (arrival && departure && departure >= arrival) {
+            nightsInput.value = String(dayDifference(arrival, departure));
+          }
+          validateDates(false);
+          renderItinerary();
+          updateAll();
+        }
+
+        function validateDates(show) {
+          const arrival = parseDate(arrivalInput.value);
+          const departure = parseDate(departureInput.value);
+          const nights = Number(nightsInput.value);
+          const valid = Boolean(arrival && departure && departure >= arrival && Number.isInteger(nights) && nights >= 0 && nights <= 90 && dayDifference(arrival, departure) === nights);
+          const error = document.getElementById("date-error");
+          error.classList.toggle("is-visible", show && !valid);
+          arrivalInput.setAttribute("aria-invalid", String(show && !valid && !arrival));
+          departureInput.setAttribute("aria-invalid", String(show && !valid && (!departure || (arrival && departure < arrival))));
+          nightsInput.setAttribute("aria-invalid", String(show && !valid));
+          return valid;
+        }
+
+        function renderItinerary() {
+          const nights = Number(nightsInput.value);
+          const days = Number.isInteger(nights) && nights >= 0 && nights <= 90 ? nights + 1 : 0;
+          const signature = `${days}:${itineraryList.querySelectorAll(".itinerary-day").length}`;
+          if (signature === itinerarySignature) return;
+          const previous = Array.from(itineraryList.querySelectorAll(".itinerary-day")).map((row) => ({
+            pace: row.querySelector("select").value,
+            note: row.querySelector("input").value
+          }));
+          itinerarySignature = signature;
+          itineraryList.innerHTML = Array.from({ length: days }, (_, index) => {
+            const saved = previous[index] || {};
+            const defaultPace = index === 0 || index === days - 1 ? "travel" : "open";
+            return `<div class="itinerary-day"><strong>Day ${index + 1}${index === 0 ? " · arrival" : index === days - 1 ? " · departure" : ""}</strong><select aria-label="Day ${index + 1} pace"><option value="open" ${saved.pace === "open" || !saved.pace ? "selected" : ""}>Open / undecided</option><option value="rest" ${saved.pace === "rest" ? "selected" : ""}>Rest day</option><option value="free" ${saved.pace === "free" ? "selected" : ""}>Free time</option><option value="travel" ${saved.pace === "travel" || (!saved.pace && defaultPace === "travel") ? "selected" : ""}>Travel day</option></select><input type="text" maxlength="180" aria-label="Day ${index + 1} notes" placeholder="Optional note" value="${escapeHtml(saved.note)}" /></div>`;
+          }).join("");
+        }
+
+        function itineraryText() {
+          return Array.from(itineraryList.querySelectorAll(".itinerary-day")).map((row, index) => {
+            const pace = row.querySelector("select").selectedOptions[0].textContent;
+            const note = row.querySelector("input").value.trim();
+            return `Day ${index + 1}: ${pace}${note ? ` — ${note}` : ""}`;
+          });
+        }
+
+        function formatDate(value) {
+          const date = parseDate(value);
+          return date ? new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(date) : "Not selected";
+        }
+
+        function costRows(summary) {
+          const categories = [
+            ["Accommodation", accommodationSelect.value === "none" ? [] : summary.lines.filter((line) => line.name.startsWith("Accommodation"))],
+            ["Transport", summary.lines.filter((line) => line.name.startsWith("Transport"))],
+            ["Activities", summary.lines.filter((line) => line.name.startsWith("Activity:") || line.name.startsWith("Requested activity"))],
+            ["Equipment / extras", summary.lines.filter((line) => line.name.startsWith("Equipment"))]
+          ];
+          return categories.map(([label, lines]) => {
+            const confirmed = lines.filter((line) => line.status === "confirmed").reduce((total, line) => total + line.amount, 0);
+            const pending = lines.some((line) => line.status !== "confirmed");
+            return `<li class="cost-row"><span>${label}</span><strong>${pending ? `Pending · confirmed ${formatMoney(confirmed)}` : formatMoney(confirmed)}</strong></li>`;
+          }).join("") + `<li class="cost-row"><span>Taxes / mandatory fees</span><strong>Not configured</strong></li>`;
+        }
+
+        function budgetMessage(summary) {
+          const target = Number(document.getElementById("budget-target").value);
+          if (!Number.isFinite(target) || target <= 0) return "Add a budget target to compare it once approved rates are available.";
+          if (summary.estimatedTotal === null) return `Target: ${formatMoney(target)}. Remaining budget cannot be calculated until outstanding prices and availability are confirmed.`;
+          const remaining = target - summary.estimatedTotal;
+          return remaining >= 0 ? `${formatMoney(remaining)} remains under your target.` : `${formatMoney(Math.abs(remaining))} over your target.`;
+        }
+
+        function adjustmentMessage(summary) {
+          if (summary.estimatedTotal === null) return "No cost-saving changes are suggested while rates are unapproved. Your choices remain unchanged; OTG can compare alternatives after confirming options and prices.";
+          const target = Number(document.getElementById("budget-target").value);
+          if (!Number.isFinite(target) || target <= 0 || summary.estimatedTotal <= target) return "No budget adjustment is needed based on the currently configured prices.";
+          return "The configured catalogue has no verified lower-cost alternative to suggest. Consider discussing trip length or options with OTG; nothing has been changed.";
+        }
+
+        function updateSummary() {
+          const destination = getSelectedDestination();
+          const accommodation = getSelectedAccommodation();
+          const transport = getSelectedTransport();
+          const travellerCount = document.getElementById("traveller-count").value || "Not set";
+          const arrival = formatDate(arrivalInput.value);
+          const departure = formatDate(departureInput.value);
+          const nights = Number(nightsInput.value);
+          const duration = Number.isInteger(nights) && nights >= 0 ? `${nights + 1} day${nights === 0 ? "" : "s"} · ${nights} night${nights === 1 ? "" : "s"}` : "Not set";
+          const activity = document.getElementById("activity-preference").value.trim();
+          const summary = getCostSummary();
+          const budgetTarget = Number(document.getElementById("budget-target").value);
+          const summaryItems = [
+            ["Destination", destination ? `${destination.name} · unconfirmed` : "Not selected"],
+            ["Stay", accommodation ? `${accommodation.name} · details pending` : accommodationSelect.value === "help" ? "Help me choose · pending" : "No accommodation requested"],
+            ["Travellers", travellerCount],
+            ["Dates", `${arrival} to ${departure}${document.getElementById("flexible-dates").checked ? " · flexible" : ""}`],
+            ["Duration", duration],
+            ["Activities", activity ? `${activity} · preference only` : "No activity preference entered"],
+            ["Transport", transport ? transport.name : "Not selected"],
+            ["Budget target", Number.isFinite(budgetTarget) && budgetTarget > 0 ? formatMoney(budgetTarget) : "Not set"]
+          ];
+          document.getElementById("live-summary").innerHTML = `<ul class="summary-list">${summaryItems.map(([label, value]) => `<li class="summary-row"><span>${escapeHtml(label)}</span><strong>${escapeHtml(value)}</strong></li>`).join("")}</ul>`;
+          document.getElementById("live-costs").innerHTML = costRows(summary);
+          document.getElementById("live-total").textContent = summary.estimatedTotal === null ? "Pending" : formatMoney(summary.estimatedTotal);
+          const confirmedPerPerson = summary.estimatedTotal === null ? "Pending" : formatMoney(summary.estimatedTotal / Math.max(1, Number(travellerCount) || 1));
+          const pendingText = summary.pending.length ? ` ${summary.pending.length} selected item${summary.pending.length === 1 ? "" : "s"} need approved pricing.` : "";
+          document.getElementById("live-cost-note").textContent = `Estimated per person: ${confirmedPerPerson}. Confirmed amount: ${formatMoney(summary.confirmedSubtotal)}.${summary.transportExcluded ? " Self-arranged vehicle costs are excluded." : ""}${pendingText} No taxes or mandatory fees are included.`;
+          document.getElementById("live-budget").textContent = budgetMessage(summary);
+          document.getElementById("budget-review").textContent = budgetMessage(summary);
+          document.getElementById("adjustment-review").textContent = adjustmentMessage(summary);
+          document.getElementById("cost-breakdown").innerHTML = `<ul class="cost-list">${costRows(summary)}</ul><p class="summary-small">Confirmed subtotal: ${formatMoney(summary.confirmedSubtotal)} · Estimated trip total: ${summary.estimatedTotal === null ? "Pending review" : formatMoney(summary.estimatedTotal)} · Estimated per person: ${confirmedPerPerson}</p>`;
+        }
+
+        function reviewContent() {
+          const destination = getSelectedDestination();
+          const accommodation = getSelectedAccommodation();
+          const transport = getSelectedTransport();
+          const summary = getCostSummary();
+          const travellerName = document.getElementById("traveller-name").value.trim();
+          const email = document.getElementById("traveller-email").value.trim();
+          const activity = document.getElementById("activity-preference").value.trim();
+          const days = itineraryText();
+          const rows = [
+            ["Traveller", travellerName || "Not provided"],
+            ["Email", email || "Not provided"],
+            ["Phone", document.getElementById("traveller-phone").value.trim() || "Not provided"],
+            ["Group size", document.getElementById("traveller-count").value],
+            ["Destination", destination ? `${destination.name} · ${destination.status}` : "Not selected"],
+            ["Accommodation", accommodation ? `${accommodation.name} · pending confirmation` : accommodationSelect.value === "help" ? "Help me choose · pending" : "No accommodation required"],
+            ["Dates", `${formatDate(arrivalInput.value)} to ${formatDate(departureInput.value)}${document.getElementById("flexible-dates").checked ? " · flexible" : ""}`],
+            ["Duration", `${Number(nightsInput.value) + 1} days · ${nightsInput.value} nights`],
+            ["Transport", transport ? `${transport.name} · ${transport.status}` : "Not selected"],
+            ["Pickup / route", pickupInput.value.trim() || "Not provided"],
+            ["Activities preference", activity || "None provided · no approved activities configured"],
+            ["Equipment request", document.getElementById("gear-request").checked ? "Ask OTG to review · pricing pending" : "None"],
+            ["Budget target", Number(document.getElementById("budget-target").value) > 0 ? formatMoney(Number(document.getElementById("budget-target").value)) : "Not set"],
+            ["Cost status", `${summary.estimatedTotal === null ? "Pending pricing and review" : formatMoney(summary.estimatedTotal)} · confirmed subtotal ${formatMoney(summary.confirmedSubtotal)}`],
+            ["Special requirements", document.getElementById("special-requirements").value.trim() || "None provided"]
+          ];
+          const itinerary = days.some((line) => !line.includes("Open / undecided")) ? `<div class="review-block"><h3>Day-by-day outline · preference only</h3><ul>${days.map((line) => `<li>${escapeHtml(line)}</li>`).join("")}</ul></div>` : "";
+          return `<div class="review-block"><h3>Trip details</h3>${rows.map(([label, value]) => `<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</p>`).join("")}</div>${itinerary}<div class="review-block"><h3>Still requires OTG confirmation</h3><p>Destination and region mapping, dates, accommodation and facilities, activity offering and requirements, transport arrangements, rates, taxes or fees, and availability. No reservation is made.</p></div>`;
+        }
+
+        function toPlainSummary() {
+          const destination = getSelectedDestination();
+          const accommodation = getSelectedAccommodation();
+          const transport = getSelectedTransport();
+          const summary = getCostSummary();
+          return [
+            "OFF THE GRID EVENTS · TRIP ENQUIRY (NOT SENT)",
+            `Name: ${document.getElementById("traveller-name").value.trim()}`,
+            `Email: ${document.getElementById("traveller-email").value.trim()}`,
+            `Phone: ${document.getElementById("traveller-phone").value.trim() || "Not provided"}`,
+            `Travellers: ${document.getElementById("traveller-count").value}`,
+            `Destination: ${destination ? `${destination.name} (${destination.status})` : "Not selected"}`,
+            `Accommodation: ${accommodation ? `${accommodation.name} (pending)` : accommodationSelect.value === "help" ? "Help me choose (pending)" : "None required"}`,
+            `Dates: ${formatDate(arrivalInput.value)} to ${formatDate(departureInput.value)}${document.getElementById("flexible-dates").checked ? " (flexible)" : ""}`,
+            `Duration: ${nightsInput.value} night(s)`,
+            `Activities preference: ${document.getElementById("activity-preference").value.trim() || "None"}`,
+            `Transport: ${transport ? transport.name : "Not selected"}`,
+            `Pickup / route: ${pickupInput.value.trim() || "Not provided"}`,
+            `Equipment request: ${document.getElementById("gear-request").checked ? "Yes; review requested" : "No"}`,
+            `Budget target: ${Number(document.getElementById("budget-target").value) > 0 ? formatMoney(Number(document.getElementById("budget-target").value)) : "Not set"}`,
+            `Cost: ${summary.estimatedTotal === null ? "Pending OTG approval" : formatMoney(summary.estimatedTotal)}; confirmed subtotal ${formatMoney(summary.confirmedSubtotal)}`,
+            `Special requirements: ${document.getElementById("special-requirements").value.trim() || "None"}`,
+            "No dates, availability, accommodation, transport, or prices are confirmed. This enquiry has not been sent."
+          ].join("\n");
+        }
+
+        function updateAll() {
+          updateSummary();
+          if (currentStep === 4) document.getElementById("final-review").innerHTML = reviewContent();
+        }
+
+        function displayStep(index) {
+          currentStep = index;
+          steps.forEach((step, stepIndex) => { step.hidden = stepIndex !== index; });
+          progressButtons.forEach((button, stepIndex) => {
+            if (stepIndex === index) button.setAttribute("aria-current", "step");
+            else button.removeAttribute("aria-current");
+          });
+          document.getElementById("previous-step").hidden = index === 0;
+          document.getElementById("next-step").hidden = index === steps.length - 1;
+          document.getElementById("send-enquiry").hidden = index !== steps.length - 1;
+          plannerStatus.classList.remove("is-visible");
+          if (index === 4) document.getElementById("final-review").innerHTML = reviewContent();
+          steps[index].querySelector("h2").focus({ preventScroll: true });
+          document.querySelector(".planner-workspace").scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+        function validateStep(index) {
+          plannerStatus.textContent = "";
+          plannerStatus.classList.remove("is-visible");
+          if (index === 0) {
+            const name = document.getElementById("traveller-name");
+            const email = document.getElementById("traveller-email");
+            const count = document.getElementById("traveller-count");
+            const nameValid = name.value.trim().length >= 2;
+            const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+            const travellers = Number(count.value);
+            const countValid = Number.isInteger(travellers) && travellers >= 1 && travellers <= 99;
+            [[name, "name-error", nameValid], [email, "email-error", emailValid], [count, "travellers-error", countValid]].forEach(([input, errorId, valid]) => {
+              input.setAttribute("aria-invalid", String(!valid));
+              document.getElementById(errorId).classList.toggle("is-visible", !valid);
+            });
+            if (!nameValid || !emailValid || !countValid) {
+              plannerStatus.textContent = "Please correct the highlighted traveller details before continuing.";
+              plannerStatus.classList.add("is-visible");
+              return false;
+            }
+          }
+          if (index === 1) {
+            const regionValid = Boolean(regionSelect.value);
+            const destinationValid = Boolean(getSelectedDestination());
+            regionSelect.setAttribute("aria-invalid", String(!regionValid));
+            destinationSelect.setAttribute("aria-invalid", String(!destinationValid));
+            if (!regionValid || !destinationValid) {
+              plannerStatus.textContent = "Choose a region and one of its listed destinations. The destination will remain unconfirmed.";
+              plannerStatus.classList.add("is-visible");
+              return false;
+            }
+          }
+          if (index === 2 && !validateDates(true)) {
+            plannerStatus.textContent = "Review the arrival date, departure date and trip length.";
+            plannerStatus.classList.add("is-visible");
+            return false;
+          }
+          if (index === 3 && transportSelect.value === "ask-otg-transport" && !pickupInput.value.trim()) {
+            pickupInput.setAttribute("aria-invalid", "true");
+            document.getElementById("pickup-error").classList.add("is-visible");
+            plannerStatus.textContent = "Add a pickup location or route preference so OTG can review the transport request.";
+            plannerStatus.classList.add("is-visible");
+            pickupInput.focus();
+            return false;
+          }
+          return true;
+        }
+
+        regionSelect.addEventListener("change", () => {
+          updateDestinationOptions(false);
+          updateAccommodationOptions();
+          updateActivityOptions();
+          regionSelect.removeAttribute("aria-invalid");
+          destinationSelect.removeAttribute("aria-invalid");
+        });
+        destinationSelect.addEventListener("change", () => { updateDestinationDetail(); updateAccommodationOptions(); updateActivityOptions(); updateAll(); });
+        document.getElementById("activity-options").addEventListener("change", updateAll);
+        accommodationSelect.addEventListener("change", updateAll);
+        transportSelect.addEventListener("change", () => { updateTransportFollowup(); updateAll(); });
+        arrivalInput.addEventListener("change", updateDatesFromNights);
+        departureInput.addEventListener("change", updateNightsFromDates);
+        nightsInput.addEventListener("input", updateDatesFromNights);
+        itineraryList.addEventListener("input", updateAll);
+        itineraryList.addEventListener("change", updateAll);
+        form.addEventListener("input", (event) => {
+          if (event.target.matches("#traveller-name, #traveller-email, #traveller-count, #activity-preference, #special-requirements, #budget-target, #pickup-location")) updateAll();
+          if (event.target.matches("#traveller-name, #traveller-email, #traveller-count")) event.target.removeAttribute("aria-invalid");
+          if (event.target === pickupInput && pickupInput.value.trim()) {
+            pickupInput.removeAttribute("aria-invalid");
+            document.getElementById("pickup-error").classList.remove("is-visible");
+          }
+        });
+        form.addEventListener("change", (event) => {
+          if (event.target.matches("#flexible-dates, #gear-request")) updateAll();
+        });
+
+        document.getElementById("previous-step").addEventListener("click", () => displayStep(Math.max(0, currentStep - 1)));
+        document.getElementById("next-step").addEventListener("click", () => {
+          if (validateStep(currentStep)) displayStep(Math.min(steps.length - 1, currentStep + 1));
+        });
+        progressButtons.forEach((button) => button.addEventListener("click", () => {
+          const target = Number(button.dataset.goStep);
+          if (target <= currentStep) displayStep(target);
+          else if (validateStep(currentStep)) displayStep(Math.min(currentStep + 1, target));
+        }));
+        document.getElementById("send-enquiry").addEventListener("click", () => {
+          for (let stepIndex = 0; stepIndex < 4; stepIndex += 1) {
+            if (!validateStep(stepIndex)) {
+              displayStep(stepIndex);
+              validateStep(stepIndex);
+              return;
+            }
+          }
+          finalSummaryText = toPlainSummary();
+          const status = document.getElementById("send-status");
+          status.textContent = "This site has no secure enquiry backend or approved delivery channel. Your trip enquiry was NOT sent, stored, or reserved. Copy the summary below and share it only through an OTG-approved contact channel once one is confirmed.";
+          status.classList.add("is-visible");
+          document.getElementById("copy-summary").hidden = false;
+        });
+        document.getElementById("copy-summary").addEventListener("click", async (event) => {
+          try {
+            await navigator.clipboard.writeText(finalSummaryText);
+            event.currentTarget.textContent = "Summary copied";
+          } catch (error) {
+            const textArea = document.createElement("textarea");
+            textArea.value = finalSummaryText;
+            textArea.setAttribute("readonly", "");
+            textArea.style.position = "fixed";
+            textArea.style.opacity = "0";
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand("copy");
+            textArea.remove();
+            event.currentTarget.textContent = "Summary copied";
+          }
+        });
+
+        document.getElementById("traveller-count").addEventListener("input", updateAll);
+        document.getElementById("special-requirements").addEventListener("input", updateAll);
+        updateRegionOptions();
+        updateAccommodationOptions();
+        updateTransportOptions();
+        renderItinerary();
+        updateAll();
+      })();
+    </script>
+  </body>
+</html>
